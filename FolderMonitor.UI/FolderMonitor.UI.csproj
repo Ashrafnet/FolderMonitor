@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9BBDFE62-CB4C-48CC-BCF0-858D22C311E2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FolderMonitor.UI</RootNamespace>
+    <AssemblyName>FolderMonitor.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Ashrafnet.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>4BD253B7DA0243EC11E1F6CEE038F8F086331ADE</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>appico.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\FolderMonitor\clsEncrypt.cs">
+      <Link>clsEncrypt.cs</Link>
+    </Compile>
+    <Compile Include="..\FolderMonitor\Impersonator.cs">
+      <Link>Impersonator.cs</Link>
+    </Compile>
+    <Compile Include="..\FolderMonitor\PathCredentials.cs">
+      <Link>PathCredentials.cs</Link>
+    </Compile>
+    <Compile Include="..\FolderMonitor\UNCAccessWithCredentials.cs">
+      <Link>UNCAccessWithCredentials.cs</Link>
+    </Compile>
+    <Compile Include="ConfigService.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigService.Designer.cs">
+      <DependentUpon>ConfigService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExcludedItemsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExcludedItemsControl.Designer.cs">
+      <DependentUpon>ExcludedItemsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExcludedItemsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExcludedItemsDialog.Designer.cs">
+      <DependentUpon>ExcludedItemsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileDropTargetWrapper.cs" />
+    <Compile Include="NewTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewTask.Designer.cs">
+      <DependentUpon>NewTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Office2007Render\Office2007ColorTable.cs" />
+    <Compile Include="Office2007Render\Office2007Helpers.cs" />
+    <Compile Include="Office2007Render\Office2007Renderer.cs" />
+    <Compile Include="PathCradentialUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PathCradentialUI.Designer.cs">
+      <DependentUpon>PathCradentialUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceConfig.cs" />
+    <Compile Include="ServiceManager.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WindowsServicesHelper.cs" />
+    <EmbeddedResource Include="ConfigService.resx">
+      <DependentUpon>ConfigService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExcludedItemsControl.resx">
+      <DependentUpon>ExcludedItemsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExcludedItemsDialog.resx">
+      <DependentUpon>ExcludedItemsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewTask.resx">
+      <DependentUpon>NewTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PathCradentialUI.resx">
+      <DependentUpon>PathCradentialUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.manifest" />
+    <None Include="Ashrafnet.snk" />
+    <None Include="FolderMonitor.UI_TemporaryKey.pfx" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\prop.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\record.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Start.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Stop.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\info_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Robocopy.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appico.ico" />
+    <None Include="Resources\FolderMonitor.exe" />
+    <None Include="bin\Debug\FolderMonitor.exe" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
