@@ -61,7 +61,7 @@ namespace FolderMonitor.UI
                 if (Pathcredentials.CheckAccessiblity())
                     MessageBox.Show("All Good, you can GO.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else
-                    MessageBox.Show("This Path is not exist or inaccessible.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("This path is not exist or inaccessible.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 
             }

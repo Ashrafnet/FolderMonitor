@@ -77,8 +77,10 @@ namespace FolderMonitor
             if (IsPathHasUserName && IsUNC)
 
             {
+                //\\RemoteServerName\IPC$
+                string xx =@"\\"+ System.IO.Path.Combine(GetHostNameOfUNCPath(), "IPC$");
                 var unc_from = new UNCAccessWithCredentials() { AutoDispose = false };
-                if ((!unc_from.NetUseWithCredentials(Path.Trim().TrimEnd('\\'), UserName, Domain, Password) && unc_from.LastError != 1219))
+                if ((!unc_from.NetUseWithCredentials(xx, UserName, Domain, Password) && unc_from.LastError != 1219))
                 {
                     if (!IsPathUNCStartswithIP)
                         throw new Exception("Failed to connect to " + Path + "\r\nYou have to point to remote share folder using IP address instead of DNS name, So Remote Share folder should look like:\\\\10.10..\\SharefolderName.");
@@ -88,6 +90,14 @@ namespace FolderMonitor
                 unc_from.Dispose();
             }
             return PathExists(true);
+        }
+
+        private string GetHostNameOfUNCPath()
+        {
+            Uri uri = new Uri(Path );
+            string[] segs = uri.Segments;
+            return uri.Host;
+                
         }
 
         bool CanRunProcess()

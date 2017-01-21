@@ -34,6 +34,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.txtlogs = new System.Windows.Forms.TextBox();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.clearLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -43,39 +44,13 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-            this.propertyGrid2 = new System.Windows.Forms.PropertyGrid();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.addButton = new System.Windows.Forms.ToolStripButton();
-            this.editButton = new System.Windows.Forms.ToolStripButton();
-            this.removeButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.btnsave = new System.Windows.Forms.ToolStripButton();
-            this.historyButton = new System.Windows.Forms.ToolStripButton();
-            this.scheduleButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.robocopyLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.validateAccessibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copySourceCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyTargetCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,16 +61,42 @@
             this.pasteTargetCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.pasteSourceAndTargetCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.openSourceFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openTargetFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusInfo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.startservice = new System.Windows.Forms.ToolStripStatusLabel();
-            this.stopservice = new System.Windows.Forms.ToolStripStatusLabel();
-            this.installservice = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.propertyGrid2 = new System.Windows.Forms.PropertyGrid();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolstatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel6 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.startservice = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stopservice = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.installservice = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.addButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.editButton = new System.Windows.Forms.ToolStripButton();
+            this.removeButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnsave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.historyButton = new System.Windows.Forms.ToolStripButton();
+            this.scheduleButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.contextMenuStrip2.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -137,7 +138,7 @@
             this.txtlogs.Name = "txtlogs";
             this.txtlogs.ReadOnly = true;
             this.txtlogs.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtlogs.Size = new System.Drawing.Size(612, 102);
+            this.txtlogs.Size = new System.Drawing.Size(612, 131);
             this.txtlogs.TabIndex = 0;
             this.toolTip1.SetToolTip(this.txtlogs, "Folder Monitor Service Logs");
             // 
@@ -147,6 +148,14 @@
             this.clearLogsToolStripMenuItem});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
             this.contextMenuStrip2.Size = new System.Drawing.Size(136, 26);
+            // 
+            // clearLogsToolStripMenuItem
+            // 
+            this.clearLogsToolStripMenuItem.Image = global::FolderMonitor.UI.Properties.Resources.delete2;
+            this.clearLogsToolStripMenuItem.Name = "clearLogsToolStripMenuItem";
+            this.clearLogsToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.clearLogsToolStripMenuItem.Text = "Clear Logs..";
+            this.clearLogsToolStripMenuItem.Click += new System.EventHandler(this.clearLogsToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -205,9 +214,10 @@
             // 
             // splitContainer3.Panel2
             // 
+            this.splitContainer3.Panel2.Controls.Add(this.linkLabel1);
             this.splitContainer3.Panel2.Controls.Add(this.txtlogs);
             this.splitContainer3.Size = new System.Drawing.Size(612, 400);
-            this.splitContainer3.SplitterDistance = 294;
+            this.splitContainer3.SplitterDistance = 265;
             this.splitContainer3.TabIndex = 1;
             // 
             // listView1
@@ -223,7 +233,7 @@
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.Name = "listView1";
             this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(612, 294);
+            this.listView1.Size = new System.Drawing.Size(612, 265);
             this.listView1.SmallImageList = this.imageList1;
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -266,270 +276,6 @@
             this.contextMenuStrip1.Size = new System.Drawing.Size(185, 220);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(181, 6);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(181, 6);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(181, 6);
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.propertyGrid1);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.propertyGrid2);
-            this.splitContainer2.Size = new System.Drawing.Size(200, 400);
-            this.splitContainer2.SplitterDistance = 193;
-            this.splitContainer2.TabIndex = 1;
-            // 
-            // propertyGrid1
-            // 
-            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.propertyGrid1.Size = new System.Drawing.Size(200, 193);
-            this.propertyGrid1.TabIndex = 0;
-            this.propertyGrid1.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid1_PropertyValueChanged);
-            // 
-            // propertyGrid2
-            // 
-            this.propertyGrid2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid2.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid2.Name = "propertyGrid2";
-            this.propertyGrid2.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.propertyGrid2.Size = new System.Drawing.Size(200, 203);
-            this.propertyGrid2.TabIndex = 1;
-            this.propertyGrid2.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid1_PropertyValueChanged);
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 5000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolstatus,
-            this.toolStripStatusLabel6,
-            this.statusInfo,
-            this.toolStripStatusLabel3,
-            this.startservice,
-            this.stopservice,
-            this.toolStripStatusLabel1,
-            this.installservice,
-            this.toolStripStatusLabel4,
-            this.toolStripStatusLabel2});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 497);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode;
-            this.statusStrip1.Size = new System.Drawing.Size(829, 22);
-            this.statusStrip1.TabIndex = 1005;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel3
-            // 
-            this.toolStripStatusLabel3.Enabled = false;
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(10, 17);
-            this.toolStripStatusLabel3.Text = "|";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Enabled = false;
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(10, 17);
-            this.toolStripStatusLabel1.Text = "|";
-            // 
-            // toolStripStatusLabel4
-            // 
-            this.toolStripStatusLabel4.Enabled = false;
-            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(10, 17);
-            this.toolStripStatusLabel4.Text = "|";
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addButton,
-            this.toolStripSeparator3,
-            this.editButton,
-            this.removeButton,
-            this.toolStripSeparator1,
-            this.toolStripButton4,
-            this.toolStripSeparator4,
-            this.btnsave,
-            this.toolStripSeparator2,
-            this.historyButton,
-            this.scheduleButton,
-            this.toolStripButton1,
-            this.toolStripSeparator5,
-            this.toolStripButton8});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 50);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(829, 38);
-            this.toolStrip1.TabIndex = 1006;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 38);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 38);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 38);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 38);
-            // 
-            // fileSystemWatcher1
-            // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
-            this.fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
-            // 
-            // addButton
-            // 
-            this.addButton.Image = global::FolderMonitor.UI.Properties.Resources.data_copy_add;
-            this.addButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(67, 35);
-            this.addButton.Text = "New Task..";
-            this.addButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.addButton.ToolTipText = "Add a new mirror task.";
-            this.addButton.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
-            // editButton
-            // 
-            this.editButton.Image = global::FolderMonitor.UI.Properties.Resources.data_copy;
-            this.editButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(37, 35);
-            this.editButton.Text = "Edit..";
-            this.editButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.editButton.ToolTipText = "Edit the selected mirror task.";
-            this.editButton.Click += new System.EventHandler(this.toolStripButton2_Click);
-            // 
-            // removeButton
-            // 
-            this.removeButton.Image = global::FolderMonitor.UI.Properties.Resources.data_copy_delete;
-            this.removeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.removeButton.Name = "removeButton";
-            this.removeButton.Size = new System.Drawing.Size(54, 35);
-            this.removeButton.Text = "Remove";
-            this.removeButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.removeButton.ToolTipText = "Remove the selected mirror task.";
-            this.removeButton.Click += new System.EventHandler(this.toolStripButton3_Click);
-            // 
-            // toolStripButton4
-            // 
-            this.toolStripButton4.Image = global::FolderMonitor.UI.Properties.Resources.refresh;
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(50, 35);
-            this.toolStripButton4.Text = "Refresh";
-            this.toolStripButton4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton4.ToolTipText = "Reload Tasks from Config file.";
-            this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
-            // 
-            // btnsave
-            // 
-            this.btnsave.Enabled = false;
-            this.btnsave.Image = global::FolderMonitor.UI.Properties.Resources.check;
-            this.btnsave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnsave.Name = "btnsave";
-            this.btnsave.Size = new System.Drawing.Size(84, 35);
-            this.btnsave.Text = "Save Changes";
-            this.btnsave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnsave.ToolTipText = "Save Changes to config file, so Folder monitor service can work on this new chang" +
-    "es.";
-            this.btnsave.Click += new System.EventHandler(this.toolStripButton7_Click);
-            // 
-            // historyButton
-            // 
-            this.historyButton.Image = global::FolderMonitor.UI.Properties.Resources.folder_view;
-            this.historyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.historyButton.Name = "historyButton";
-            this.historyButton.Size = new System.Drawing.Size(94, 35);
-            this.historyButton.Text = "Logs Folder..";
-            this.historyButton.ToolTipText = "Open the logs folder.";
-            this.historyButton.Click += new System.EventHandler(this.toolStripButton5_Click);
-            // 
-            // scheduleButton
-            // 
-            this.scheduleButton.Image = global::FolderMonitor.UI.Properties.Resources.text;
-            this.scheduleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.scheduleButton.Name = "scheduleButton";
-            this.scheduleButton.Size = new System.Drawing.Size(72, 35);
-            this.scheduleButton.Text = "Config...";
-            this.scheduleButton.ToolTipText = "Manage your tasks manually by edit the config file by notepad editor.";
-            this.scheduleButton.Click += new System.EventHandler(this.toolStripButton6_Click);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Image = global::FolderMonitor.UI.Properties.Resources.info_16;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(136, 35);
-            this.toolStripButton1.Text = "Validate Accessibility";
-            this.toolStripButton1.ToolTipText = "Use this to check and validate accessibility for all backup tasks.";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_1);
-            // 
-            // toolStripButton8
-            // 
-            this.toolStripButton8.Image = global::FolderMonitor.UI.Properties.Resources.close;
-            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(51, 35);
-            this.toolStripButton8.Text = "Exit GUI";
-            this.toolStripButton8.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton8.ToolTipText = "Exit from Folder Monitor GUI";
-            this.toolStripButton8.Click += new System.EventHandler(this.toolStripButton8_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.BackColor = System.Drawing.Color.SteelBlue;
-            this.pictureBox1.Image = global::FolderMonitor.UI.Properties.Resources.data_information32;
-            this.pictureBox1.Location = new System.Drawing.Point(779, 7);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(37, 39);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 1003;
-            this.pictureBox1.TabStop = false;
-            // 
             // duplicateToolStripMenuItem
             // 
             this.duplicateToolStripMenuItem.Image = global::FolderMonitor.UI.Properties.Resources.data_copy_add;
@@ -563,6 +309,11 @@
             this.robocopyLogsToolStripMenuItem.Text = "Robocopy Logs..";
             this.robocopyLogsToolStripMenuItem.Click += new System.EventHandler(this.robocopyLogsToolStripMenuItem_Click);
             // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(181, 6);
+            // 
             // validateAccessibilityToolStripMenuItem
             // 
             this.validateAccessibilityToolStripMenuItem.Image = global::FolderMonitor.UI.Properties.Resources.info_16;
@@ -571,6 +322,11 @@
             this.validateAccessibilityToolStripMenuItem.Text = "Validate Accessibility";
             this.validateAccessibilityToolStripMenuItem.ToolTipText = "Check and Validate Accessibility for the selected tasks only.";
             this.validateAccessibilityToolStripMenuItem.Click += new System.EventHandler(this.validateAccessibilityToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(181, 6);
             // 
             // copyToolStripMenuItem
             // 
@@ -651,6 +407,11 @@
             this.pasteSourceAndTargetCredentialsToolStripMenuItem.Text = "Paste To Source and Target Credentials";
             this.pasteSourceAndTargetCredentialsToolStripMenuItem.Click += new System.EventHandler(this.pasteSourceCredentialsToolStripMenuItem_Click);
             // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(181, 6);
+            // 
             // openSourceFolderToolStripMenuItem
             // 
             this.openSourceFolderToolStripMenuItem.Image = global::FolderMonitor.UI.Properties.Resources.folder_view;
@@ -669,13 +430,83 @@
             this.openTargetFolderToolStripMenuItem.Text = "Open Target Folder..";
             this.openTargetFolderToolStripMenuItem.Click += new System.EventHandler(this.openSourceFolderToolStripMenuItem_Click);
             // 
-            // clearLogsToolStripMenuItem
+            // splitContainer2
             // 
-            this.clearLogsToolStripMenuItem.Image = global::FolderMonitor.UI.Properties.Resources.delete2;
-            this.clearLogsToolStripMenuItem.Name = "clearLogsToolStripMenuItem";
-            this.clearLogsToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.clearLogsToolStripMenuItem.Text = "Clear Logs..";
-            this.clearLogsToolStripMenuItem.Click += new System.EventHandler(this.clearLogsToolStripMenuItem_Click);
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.propertyGrid1);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.propertyGrid2);
+            this.splitContainer2.Size = new System.Drawing.Size(200, 400);
+            this.splitContainer2.SplitterDistance = 193;
+            this.splitContainer2.TabIndex = 1;
+            // 
+            // propertyGrid1
+            // 
+            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.propertyGrid1.Size = new System.Drawing.Size(200, 193);
+            this.propertyGrid1.TabIndex = 0;
+            this.propertyGrid1.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid1_PropertyValueChanged);
+            // 
+            // propertyGrid2
+            // 
+            this.propertyGrid2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGrid2.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid2.Name = "propertyGrid2";
+            this.propertyGrid2.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.propertyGrid2.Size = new System.Drawing.Size(200, 203);
+            this.propertyGrid2.TabIndex = 1;
+            this.propertyGrid2.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid1_PropertyValueChanged);
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 5000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolstatus,
+            this.toolStripStatusLabel6,
+            this.statusInfo,
+            this.toolStripStatusLabel3,
+            this.startservice,
+            this.stopservice,
+            this.toolStripStatusLabel1,
+            this.installservice,
+            this.toolStripStatusLabel4,
+            this.toolStripStatusLabel2});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 497);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode;
+            this.statusStrip1.Size = new System.Drawing.Size(829, 22);
+            this.statusStrip1.TabIndex = 1005;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolstatus
+            // 
+            this.toolstatus.Image = global::FolderMonitor.UI.Properties.Resources.info_16;
+            this.toolstatus.Name = "toolstatus";
+            this.toolstatus.Size = new System.Drawing.Size(55, 17);
+            this.toolstatus.Text = "Ready";
+            // 
+            // toolStripStatusLabel6
+            // 
+            this.toolStripStatusLabel6.Enabled = false;
+            this.toolStripStatusLabel6.Name = "toolStripStatusLabel6";
+            this.toolStripStatusLabel6.Size = new System.Drawing.Size(10, 17);
+            this.toolStripStatusLabel6.Text = "|";
             // 
             // statusInfo
             // 
@@ -685,6 +516,13 @@
             this.statusInfo.Size = new System.Drawing.Size(221, 17);
             this.statusInfo.Text = "Folder Monitor Service Status: Runing";
             this.statusInfo.ToolTipText = "Ready";
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.Enabled = false;
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(10, 17);
+            this.toolStripStatusLabel3.Text = "|";
             // 
             // startservice
             // 
@@ -710,6 +548,13 @@
             this.stopservice.ToolTipText = "Stops Folder Monitor Service";
             this.stopservice.Click += new System.EventHandler(this.stopservice_Click);
             // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Enabled = false;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(10, 17);
+            this.toolStripStatusLabel1.Text = "|";
+            // 
             // installservice
             // 
             this.installservice.AutoToolTip = true;
@@ -722,6 +567,13 @@
             this.installservice.ToolTipText = "Press here to install folder monitor service.";
             this.installservice.Click += new System.EventHandler(this.installservice_Click);
             // 
+            // toolStripStatusLabel4
+            // 
+            this.toolStripStatusLabel4.Enabled = false;
+            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(10, 17);
+            this.toolStripStatusLabel4.Text = "|";
+            // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Enabled = false;
@@ -732,19 +584,181 @@
             this.toolStripStatusLabel2.Text = "Service Configs..";
             this.toolStripStatusLabel2.Click += new System.EventHandler(this.toolStripStatusLabel2_Click);
             // 
-            // toolstatus
+            // toolStrip1
             // 
-            this.toolstatus.Image = global::FolderMonitor.UI.Properties.Resources.info_16;
-            this.toolstatus.Name = "toolstatus";
-            this.toolstatus.Size = new System.Drawing.Size(55, 17);
-            this.toolstatus.Text = "Ready";
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addButton,
+            this.toolStripSeparator3,
+            this.editButton,
+            this.removeButton,
+            this.toolStripSeparator1,
+            this.toolStripButton4,
+            this.toolStripSeparator4,
+            this.btnsave,
+            this.toolStripSeparator2,
+            this.historyButton,
+            this.scheduleButton,
+            this.toolStripButton1,
+            this.toolStripSeparator5,
+            this.toolStripButton8});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 50);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(829, 38);
+            this.toolStrip1.TabIndex = 1006;
+            this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripStatusLabel6
+            // addButton
             // 
-            this.toolStripStatusLabel6.Enabled = false;
-            this.toolStripStatusLabel6.Name = "toolStripStatusLabel6";
-            this.toolStripStatusLabel6.Size = new System.Drawing.Size(10, 17);
-            this.toolStripStatusLabel6.Text = "|";
+            this.addButton.Image = global::FolderMonitor.UI.Properties.Resources.data_copy_add;
+            this.addButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(67, 35);
+            this.addButton.Text = "New Task..";
+            this.addButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.addButton.ToolTipText = "Add a new mirror task.";
+            this.addButton.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 38);
+            // 
+            // editButton
+            // 
+            this.editButton.Image = global::FolderMonitor.UI.Properties.Resources.data_copy;
+            this.editButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editButton.Name = "editButton";
+            this.editButton.Size = new System.Drawing.Size(37, 35);
+            this.editButton.Text = "Edit..";
+            this.editButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.editButton.ToolTipText = "Edit the selected mirror task.";
+            this.editButton.Click += new System.EventHandler(this.toolStripButton2_Click);
+            // 
+            // removeButton
+            // 
+            this.removeButton.Image = global::FolderMonitor.UI.Properties.Resources.data_copy_delete;
+            this.removeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeButton.Name = "removeButton";
+            this.removeButton.Size = new System.Drawing.Size(54, 35);
+            this.removeButton.Text = "Remove";
+            this.removeButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.removeButton.ToolTipText = "Remove the selected mirror task.";
+            this.removeButton.Click += new System.EventHandler(this.toolStripButton3_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.Image = global::FolderMonitor.UI.Properties.Resources.refresh;
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(50, 35);
+            this.toolStripButton4.Text = "Refresh";
+            this.toolStripButton4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton4.ToolTipText = "Reload Tasks from Config file.";
+            this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 38);
+            // 
+            // btnsave
+            // 
+            this.btnsave.Enabled = false;
+            this.btnsave.Image = global::FolderMonitor.UI.Properties.Resources.check;
+            this.btnsave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnsave.Name = "btnsave";
+            this.btnsave.Size = new System.Drawing.Size(84, 35);
+            this.btnsave.Text = "Save Changes";
+            this.btnsave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnsave.ToolTipText = "Save Changes to config file, so Folder monitor service can work on this new chang" +
+    "es.";
+            this.btnsave.Click += new System.EventHandler(this.toolStripButton7_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 38);
+            // 
+            // historyButton
+            // 
+            this.historyButton.Image = global::FolderMonitor.UI.Properties.Resources.folder_view;
+            this.historyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.historyButton.Name = "historyButton";
+            this.historyButton.Size = new System.Drawing.Size(94, 35);
+            this.historyButton.Text = "Logs Folder..";
+            this.historyButton.ToolTipText = "Open the logs folder.";
+            this.historyButton.Click += new System.EventHandler(this.toolStripButton5_Click);
+            // 
+            // scheduleButton
+            // 
+            this.scheduleButton.Image = global::FolderMonitor.UI.Properties.Resources.text;
+            this.scheduleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.scheduleButton.Name = "scheduleButton";
+            this.scheduleButton.Size = new System.Drawing.Size(72, 35);
+            this.scheduleButton.Text = "Config...";
+            this.scheduleButton.ToolTipText = "Manage your tasks manually by edit the config file by notepad editor.";
+            this.scheduleButton.Click += new System.EventHandler(this.toolStripButton6_Click);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = global::FolderMonitor.UI.Properties.Resources.info_16;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(136, 35);
+            this.toolStripButton1.Text = "Validate Accessibility";
+            this.toolStripButton1.ToolTipText = "Use this to check and validate accessibility for all backup tasks.";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_1);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 38);
+            // 
+            // toolStripButton8
+            // 
+            this.toolStripButton8.Image = global::FolderMonitor.UI.Properties.Resources.close;
+            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton8.Name = "toolStripButton8";
+            this.toolStripButton8.Size = new System.Drawing.Size(51, 35);
+            this.toolStripButton8.Text = "Exit GUI";
+            this.toolStripButton8.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton8.ToolTipText = "Exit from Folder Monitor GUI";
+            this.toolStripButton8.Click += new System.EventHandler(this.toolStripButton8_Click);
+            // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            this.fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.BackColor = System.Drawing.Color.SteelBlue;
+            this.pictureBox1.Image = global::FolderMonitor.UI.Properties.Resources.data_information32;
+            this.pictureBox1.Location = new System.Drawing.Point(779, 7);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(37, 39);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 1003;
+            this.pictureBox1.TabStop = false;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.BackColor = System.Drawing.Color.White;
+            this.linkLabel1.Location = new System.Drawing.Point(2, 3);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(38, 13);
+            this.linkLabel1.TabIndex = 1;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Ready";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // MainForm
             // 
@@ -859,5 +873,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.ToolStripStatusLabel toolstatus;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel6;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

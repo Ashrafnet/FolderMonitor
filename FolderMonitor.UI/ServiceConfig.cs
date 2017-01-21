@@ -30,7 +30,7 @@ internal sealed partial class ServiceConfig
 
     }
 
-    public static string RoboCopyOptions = "/E /FFT /Z /W:20 /R:100 /MT /ETA /MON:1";
+    public static string RoboCopyOptions = "/E /FFT /Z /W:20 /R:100  /ETA /MON:1"; // /MT causes issues
     public static string ServiceFilename = "FolderMonitor.exe";
     public static string ServiceConfigFilename = "FolderMonitor.exe.conf";
 

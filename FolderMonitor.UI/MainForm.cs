@@ -89,15 +89,17 @@ namespace FolderMonitor.UI
 
             try
             {
-
+                linkLabel1.Text =  fpath ;
+                linkLabel1.Tag  = fpath;
                 if (File.Exists(fpath))
                 {
                     //if (checkBox1.Checked)
                     //    return ReadasLines(fpath);
-                    var fs = new FileStream(fpath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    var fs = new FileStream(fpath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite );
                     using (var sr = new StreamReader(fs))
                     {
                         var rr = sr.ReadToEnd() + "";
+                        fs.Close();fs.Dispose();sr.Dispose();
                         if (rr.Length > 1024 * 1000)
                             return rr.Substring(rr.Length - 1024 * 1000);
                         else
@@ -106,7 +108,9 @@ namespace FolderMonitor.UI
                     }
                 }
                 else
-                    return "";
+                {                    
+                    return "Logfile does not exist yet!" + Environment.NewLine  + fpath;
+                }
             }
             finally
             {
@@ -615,29 +619,35 @@ namespace FolderMonitor.UI
         }
 
         private void fileSystemWatcher1_Changed(object sender, FileSystemEventArgs e)
-        {
-            try
+        { if (InvokeRequired)
             {
-                if (txtlogs.Tag + "" != e.FullPath) return;
-                txtlogs.SuspendLayout();
-                txtlogs.Clear();
-                txtlogs.AppendText(File.ReadAllText(e.FullPath));
+                Invoke(new MethodInvoker(() => { fileSystemWatcher1_Changed(sender, e); }));
             }
-            catch
+            else
             {
                 try
                 {
-                    txtlogs.AppendText(File.ReadAllText(e.FullPath));
+
+
+                    if ((txtlogs.Tag + "").Trim().ToLower() != e.FullPath.Trim().ToLower())
+                    {
+                        txtlogs.AppendText(Environment.NewLine + "New Changes on file: " + e.FullPath);
+                        return;
+                    }
+                    // txtlogs.SuspendLayout();
+                    txtlogs.Clear();
+                    txtlogs.AppendText(ReadFileAsString(e.FullPath));
                 }
-                catch
+                catch (Exception er)
                 {
 
-
+                    txtlogs.AppendText(er.Message);
                 }
-            }
-            finally
-            {
-                txtlogs.ResumeLayout();
+                finally
+                {
+                    txtlogs.Refresh();
+                    // txtlogs.ResumeLayout(true );
+                }
             }
 
         }
@@ -938,6 +948,16 @@ namespace FolderMonitor.UI
             {
 
             }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var log = linkLabel1.Tag + "";
+            if (File.Exists(log))
+                Process.Start("notepad", log);
+            else
+                MessageBox.Show("The log file is not exist yet!" + Environment.NewLine + log, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
         }
     }
 }
