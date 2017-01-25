@@ -95,7 +95,7 @@ namespace FolderMonitor
         private string GetHostNameOfUNCPath()
         {
             Uri uri = new Uri(Path );
-            string[] segs = uri.Segments;
+            string[] segs = uri.Segments; 
             return uri.Host;
                 
         }
