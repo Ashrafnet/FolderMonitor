@@ -218,6 +218,6 @@
     <value>..\Resources\Robocopy.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="FolderMonitor" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FolderMonitor.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\bin\Release\FolderMonitor.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

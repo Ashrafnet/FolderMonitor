@@ -1,5 +1,4 @@
-﻿using ConnectUNCWithCredentials;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -7,6 +6,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Security;
+using System.Text;
 using System.Text.RegularExpressions;
 
 
@@ -69,6 +69,43 @@ namespace FolderMonitor
             }
         }
 
+        public string UNC_IPC { get
+            {
+                return  @"\\" + System.IO.Path.Combine(GetHostNameOfUNCPath(), "IPC$");
+            }
+        }
+        public void ConnectToUNC(bool throwException)
+        {
+            try
+            {
+
+
+                if (!IsUNC)
+                    throw new Exception("You can't connect to local, it must be a UNC path such as \\\\fileserver\\sharename");
+                if (IsPathHasUserName)
+                    Network.Host.ConnectTo(Path , new System.Net.NetworkCredential(UserName, Password, Domain), false, false, false);
+            }
+            catch (Exception er)
+            {
+                if (throwException)
+                    throw new Exception (er.InnerMessages ()+Environment.NewLine + "*trying to connect to " + Path );
+            }
+        }
+
+        public void DisconnectFromUNC()
+        {
+            try
+            {
+                Network.Host.DisconnectFrom(Path , true, false);
+
+            }
+            catch
+            {
+
+                
+            }
+
+        }
         public bool CheckAccessiblity()
         {
             if (IsPathHasUserName && !IsUNC) // if path has a user name then check if we can run a robocopy over that username.
@@ -77,19 +114,17 @@ namespace FolderMonitor
             if (IsPathHasUserName && IsUNC)
 
             {
-                //\\RemoteServerName\IPC$
-                string xx =@"\\"+ System.IO.Path.Combine(GetHostNameOfUNCPath(), "IPC$");
-                var unc_from = new UNCAccessWithCredentials() { AutoDispose = false };
-                if ((!unc_from.NetUseWithCredentials(xx, UserName, Domain, Password) && unc_from.LastError != 1219))
-                {
-                    if (!IsPathUNCStartswithIP)
-                        throw new Exception("Failed to connect to " + Path + "\r\nYou have to point to remote share folder using IP address instead of DNS name, So Remote Share folder should look like:\\\\10.10..\\SharefolderName.");
-                    else
-                        throw new Exception("Failed to connect to " + Path + "\r\nLastError = " + unc_from.LastError.ToString());
-                }
-                unc_from.Dispose();
+                bool exist = false;
+                Network.Host.ConnectTo(Path, new System.Net.NetworkCredential(UserName, Password, Domain), false, false, false);
+                exist= Directory.Exists(Path);
+                Network.Host.DisconnectFrom(Path, true, false);
+                if(!exist)
+                    throw new Exception("Can't access to path:"+ Environment.NewLine + Path + Environment.NewLine + "*Note that, connect to above path using user '"+ UserName + "' was succeeded.");
+
+                return exist; 
             }
-            return PathExists(true);
+            else
+                return PathExists(true);
         }
 
         private string GetHostNameOfUNCPath()
@@ -169,15 +204,16 @@ namespace FolderMonitor
             try
             {
 
-                if (IsPathHasUserName)
+                if (IsPathHasUserName & !IsUNC)
                 {
                     using (Tools.Impersonator i = new Tools.Impersonator(UserName, Domain, Password))
                     {
                         return Directory.Exists(Path);
                     }
                 }
-                else
-                    return Directory.Exists(Path);
+                else if (IsPathHasUserName & IsUNC)
+                  ConnectToUNC(throwException);
+                return Directory.Exists(Path);
 
             }
             catch (Exception er)
@@ -191,15 +227,16 @@ namespace FolderMonitor
         public string[] GetFileSystemEntries(string searchPattern = "*.*", SearchOption searchOption = SearchOption.TopDirectoryOnly)
         {
 
-            if (IsPathHasUserName)
+            if (IsPathHasUserName & !IsUNC)
             {
                 using (Tools.Impersonator i = new Tools.Impersonator(UserName, Domain, Password))
                 {
                     return Directory.GetFileSystemEntries(Path, searchPattern, searchOption);
                 }
             }
-            else
-                return Directory.GetFileSystemEntries(Path, searchPattern, searchOption);
+            else if (IsPathHasUserName & IsUNC)
+                ConnectToUNC(false );
+            return Directory.GetFileSystemEntries(Path, searchPattern, searchOption);
         }
 
         public object Clone()
@@ -214,16 +251,19 @@ namespace FolderMonitor
         public PathCredentials From { get; set; }
         public PathCredentials To { get; set; }
         public string ExtendedAttributes { get;  set; }
+        public bool IsEnabled { get;  set; }
 
         public PathFromAndTo()
         {
             From = new PathCredentials ();
             To = new PathCredentials ();
+            IsEnabled = true;
         }
         public PathFromAndTo(PathCredentials from,PathCredentials to)
         {
             From = from;
             To = to;
+            IsEnabled = true;
         }
       
 
@@ -245,113 +285,12 @@ namespace FolderMonitor
             cc.To =(PathCredentials) To.Clone();
             cc.RoboCopy_Options = RoboCopy_Options;
             cc.ExtendedAttributes = ExtendedAttributes;
+            cc.IsEnabled = IsEnabled;
             return cc;
         }
     }
 
 
-    public static class MyExtensions
-    {
-        /// <summary>
-        /// Returns a Secure string from the source string
-        /// </summary>
-        /// <param name="Source"></param>
-        /// <returns></returns>
-        public static SecureString ToSecureString(this string Source)
-        {
-            if (string.IsNullOrWhiteSpace(Source))
-                return null;
-            else
-            {
-                SecureString Result = new SecureString();
-                foreach (char c in Source.ToCharArray())
-                    Result.AppendChar(c);
-                return Result;
-            }
-        }
-        /// <summary>
-        /// Encloses a path in double-quotes if it contains spaces and
-        /// makes sure it can be used as Robocopy command-line argument.
-        /// </summary>
-        public static  string QuoteForRobocopy(this string path, bool force = false)
-        {
-            if (string.IsNullOrEmpty(path))
-                return path;
-
-            path = Quote(path, force);
-
-            //// \" is interpreted as escaped double-quote, so if the path ends with \, we need to escape the backslash => \\"
-            if (path.EndsWith("\\\"", StringComparison.Ordinal))
-                path = path.Substring(0, path.Length - 2) + "\\\\\"";
-
-            return path;
-        }
-        /// <summary>
-        /// Encloses a path in double-quotes if it contains spaces.
-        /// </summary>
-        public static  string Quote(string path, bool force = false)
-        {
-            if (string.IsNullOrEmpty(path))
-                return path;
-
-            if (!force && path.IndexOf(' ') < 0)
-                return path;
-
-            return string.Concat('"', path, '"');
-        }
-
-        public static string GetFolderName( this string path)
-        {
-            var end = -1;
-            path += "";
-            path = path.Trim();
-            if (!path.EndsWith("\\"))
-                path += "\\";
-            for (var i = path.Length; --i >= 0;)
-            {
-                var ch = path[i];
-                if (ch == System.IO.Path.DirectorySeparatorChar ||
-                    ch == System.IO.Path.AltDirectorySeparatorChar ||
-                    ch == System.IO.Path.VolumeSeparatorChar)
-                {
-                    if (end > 0)
-                    {
-                        return path.Substring(i + 1, end - i - 1);
-                    }
-
-                    end = i;
-                }
-            }
-
-            if (end > 0)
-            {
-                return path.Substring(0, end);
-            }
-
-            return path;
-        }
-
-        public static string InnerMessages(this Exception er)
-        {
-            var msg = er.Message ;
-
-            while (er.InnerException !=null  )
-            {
-
-                er = er.InnerException;
-                msg += Environment.NewLine +"InnerException: " + er.Message;
-            }
-            return msg;
-        }
-
-        public static string Encrypts(this string str)
-        {
-           return  Encryption.Encrypt(str);
-        }
-        public static string Decrypts(this string str)
-        {
-            return Encryption.Decrypt (str);
-        }
-    }
+   
 
 }

@@ -114,7 +114,7 @@ namespace FolderMonitor.UI
             {
 
 
-                if (!MirrorTask.From.PathExists(true))
+                if (!MirrorTask.From.CheckAccessiblity ())
                 {
                     _lasterror = "The source folder does not exist or inaccessible.";
                     errorProvider1.SetError(sourceFolderTextBox, _lasterror);
@@ -134,7 +134,7 @@ namespace FolderMonitor.UI
 
             try
             {
-                if (!MirrorTask.To.PathExists(true))
+                if (!MirrorTask.To.CheckAccessiblity ())
                 {
                     // in target case we don't care if folder exist or not, we only capture if user can access to the path or not.
                     return true;
@@ -284,6 +284,15 @@ namespace FolderMonitor.UI
                 robocopySwitchesTextBox.Text = ServiceConfig.RoboCopyOptions;
 
 
+        }
+
+        private void NewTask_Shown(object sender, EventArgs e)
+        {
+            if(!MirrorTask.IsEnabled )
+            {
+                Text += " (Inactive Task)";
+                BackColor = Color.LightGray;
+            }
         }
     }
 }

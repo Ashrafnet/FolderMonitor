@@ -71,29 +71,63 @@
     <Compile Include="..\FolderMonitor.UI\ServiceConfig.cs">
       <Link>ServiceConfig.cs</Link>
     </Compile>
-    <Compile Include="Checksums\Adler32.cs" />
-    <Compile Include="Checksums\CRC32.cs" />
-    <Compile Include="Checksums\IChecksum.cs" />
-    <Compile Include="Checksums\StrangeCRC.cs" />
+    <Compile Include="AlphaFS\NativeError.cs" />
+    <Compile Include="AlphaFS\Network\DfsInfo.cs" />
+    <Compile Include="AlphaFS\Network\DfsStorageInfo.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\AccessPermissions.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\Connect.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\DfsNamespaceFlavors.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\DfsPropertyFlags.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\DfsStorageStates.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\DfsTargetPriorityClass.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\DfsVolumeStates.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\ResourceDisplayType.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\ResourceScope.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\ResourceType.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\ResourceUsage.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\ShareInfoLevel.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\ShareResourceTypes.cs" />
+    <Compile Include="AlphaFS\Network\Enumerations\ShareType.cs" />
+    <Compile Include="AlphaFS\Network\Host Class\Connect.cs" />
+    <Compile Include="AlphaFS\Network\Host Class\DistributedFileSystem.cs" />
+    <Compile Include="AlphaFS\Network\Host Class\DriveConnection.cs" />
+    <Compile Include="AlphaFS\Network\Host Class\EnumerateDrives.cs" />
+    <Compile Include="AlphaFS\Network\Host Class\EnumerateOpenResources.cs" />
+    <Compile Include="AlphaFS\Network\Host Class\Host.cs" />
+    <Compile Include="AlphaFS\Network\Host Class\ServerMessageBlock.cs" />
+    <Compile Include="AlphaFS\Network\Native Methods\NativeMethods.cs" />
+    <Compile Include="AlphaFS\Network\Native Methods\NativeMethods.DistributedFileSystem.cs" />
+    <Compile Include="AlphaFS\Network\Native Methods\NativeMethods.NetworkManagement.cs" />
+    <Compile Include="AlphaFS\Network\Native Methods\NativeMethods.NetworkShareManagement.cs" />
+    <Compile Include="AlphaFS\Network\Native Methods\NativeMethods.WindowsNetworking.cs" />
+    <Compile Include="AlphaFS\Network\Native Structures\CONNECTION_INFO_1.cs" />
+    <Compile Include="AlphaFS\Network\Native Structures\DFS_INFO_200.cs" />
+    <Compile Include="AlphaFS\Network\Native Structures\DFS_INFO_300.cs" />
+    <Compile Include="AlphaFS\Network\Native Structures\DFS_INFO_9.cs" />
+    <Compile Include="AlphaFS\Network\Native Structures\DFS_STORAGE_INFO_1.cs" />
+    <Compile Include="AlphaFS\Network\Native Structures\DFS_TARGET_PRIORITY.cs" />
+    <Compile Include="AlphaFS\Network\Native Structures\FILE_INFO_3.cs" />
+    <Compile Include="AlphaFS\Network\Native Structures\NETRESOURCE.cs" />
+    <Compile Include="AlphaFS\Network\Native Structures\REMOTE_NAME_INFO.cs" />
+    <Compile Include="AlphaFS\Network\Native Structures\SHARE_INFO_1.cs" />
+    <Compile Include="AlphaFS\Network\Native Structures\SHARE_INFO_1005.cs" />
+    <Compile Include="AlphaFS\Network\Native Structures\SHARE_INFO_2.cs" />
+    <Compile Include="AlphaFS\Network\Native Structures\SHARE_INFO_503.cs" />
+    <Compile Include="AlphaFS\Network\OpenConnectionInfo.cs" />
+    <Compile Include="AlphaFS\Network\OpenResourceInfo.cs" />
+    <Compile Include="AlphaFS\Network\ShareInfo.cs" />
+    <Compile Include="AlphaFS\OperatingSystem.cs" />
+    <Compile Include="AlphaFS\Resources.Designer.cs" />
+    <Compile Include="AlphaFS\SafeGlobalMemoryBufferHandle.cs" />
+    <Compile Include="AlphaFS\SafeNativeMemoryBufferHandle.cs" />
+    <Compile Include="AlphaFS\Utils.cs" />
+    <Compile Include="AlphaFS\Win32Errors.cs" />
     <Compile Include="clsEncrypt.cs" />
-    <Compile Include="cNetworkDrives0015.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Core\FileSystemScanner.cs" />
-    <Compile Include="Core\INameTransform.cs" />
-    <Compile Include="Core\IScanFilter.cs" />
-    <Compile Include="Core\NameFilter.cs" />
-    <Compile Include="Core\PathFilter.cs" />
-    <Compile Include="Core\StreamUtils.cs" />
-    <Compile Include="Core\WindowsPathUtils.cs" />
-    <Compile Include="Encryption\PkzipClassic.cs" />
-    <Compile Include="Encryption\ZipAESStream.cs" />
-    <Compile Include="Encryption\ZipAESTransform.cs" />
     <Compile Include="FileOutputLogger.cs" />
-    <Compile Include="FileSync.cs" />
-    <Compile Include="FileSyncException.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Impersonator.cs" />
-    <Compile Include="OperationInfo_2.cs" />
+    <Compile Include="MyExtensions.cs" />
     <Compile Include="PathCredentials.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -110,36 +144,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SharpZipBaseException.cs" />
-    <Compile Include="UNCAccessWithCredentials.cs" />
-    <Compile Include="Zip\Compression\Deflater.cs" />
-    <Compile Include="Zip\Compression\DeflaterConstants.cs" />
-    <Compile Include="Zip\Compression\DeflaterEngine.cs" />
-    <Compile Include="Zip\Compression\DeflaterHuffman.cs" />
-    <Compile Include="Zip\Compression\DeflaterPending.cs" />
-    <Compile Include="Zip\Compression\Inflater.cs" />
-    <Compile Include="Zip\Compression\InflaterDynHeader.cs" />
-    <Compile Include="Zip\Compression\InflaterHuffmanTree.cs" />
-    <Compile Include="Zip\Compression\PendingBuffer.cs" />
-    <Compile Include="Zip\Compression\Streams\DeflaterOutputStream.cs" />
-    <Compile Include="Zip\Compression\Streams\InflaterInputStream.cs" />
-    <Compile Include="Zip\Compression\Streams\OutputWindow.cs" />
-    <Compile Include="Zip\Compression\Streams\StreamManipulator.cs" />
-    <Compile Include="Zip\FastZip.cs" />
-    <Compile Include="Zip\IEntryFactory.cs" />
-    <Compile Include="Zip\WindowsNameTransform.cs" />
-    <Compile Include="Zip\ZipConstants.cs" />
-    <Compile Include="Zip\ZipEntry.cs" />
-    <Compile Include="Zip\ZipEntryFactory.cs" />
-    <Compile Include="Zip\ZipException.cs" />
-    <Compile Include="Zip\ZipExtraData.cs" />
-    <Compile Include="Zip\ZipFile.cs" />
-    <Compile Include="Zip\ZipHelperStream.cs" />
-    <Compile Include="Zip\ZipInputStream.cs" />
-    <Compile Include="Zip\ZipNameTransform.cs" />
-    <Compile Include="Zip\ZipOutputStream.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AlphaFS\Resources.resx" />
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -170,6 +177,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)FolderMonitor.UI\$(OutDir) /Y</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

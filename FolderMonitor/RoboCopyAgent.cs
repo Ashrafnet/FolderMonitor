@@ -1,11 +1,8 @@
-﻿using ConnectUNCWithCredentials;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,6 +24,33 @@ namespace FolderMonitor
                 this.toPath.Path += "\\";
             }
         }
+        public RoboCopyAgent(PathFromAndTo task):this(task.From,task.To )
+        {
+            if (!string.IsNullOrWhiteSpace(task.RoboCopy_Options))
+                RoboOptions = task.RoboCopy_Options;
+            var switches = new StringBuilder();
+            if (task.From.ExcludedFiles.Count > 0)
+            {
+                switches.Append(" /xf");
+                foreach (string file in task.From.ExcludedFiles)
+                    switches.AppendPathOrWildcard( task.From.Path, file);
+            }
+
+            if (task.From.ExcludedFolders.Count > 0)
+            {
+                switches.Append(" /xd");
+                foreach (string folder in task.From.ExcludedFolders)
+                    switches. AppendPathOrWildcard( task.From.Path, folder);
+            }
+
+            if (!string.IsNullOrEmpty(task.ExtendedAttributes))
+            {
+                switches.Append(" /copy:dat");
+                switches.Append(task.ExtendedAttributes);
+            }
+
+            RoboOptions += switches.ToString();
+        }
 
         /// <summary>
         /// Destructor
@@ -34,7 +58,6 @@ namespace FolderMonitor
         ~RoboCopyAgent()
         {
             Stop();
-
 
         }
         public Process process { get; set; }
@@ -59,8 +82,7 @@ namespace FolderMonitor
 
         public event ErrorHandler ErrorOccured;
         public event DataReceivedEventHandler DataReceivedOccured;
-        UNCAccessWithCredentials unc_from = null;
-        UNCAccessWithCredentials unc_to = null;
+    
 
         public void Start()
         {
@@ -71,30 +93,32 @@ namespace FolderMonitor
           
             if (fromPath.IsUNC)
             {
-                unc_from = new UNCAccessWithCredentials() { AutoDispose = false };
-                if (fromPath.IsPathHasUserName && (!unc_from.NetUseWithCredentials(fromPath.Path.Trim().TrimEnd('\\'), fromPath.UserName, fromPath.Domain, fromPath.Password) && unc_from.LastError != 1219))
-                {
-                    if (!fromPath.IsPathUNCStartswithIP)
-                        ErrorOccured?.Invoke(this, new Exception("Failed to connect to " + fromPath + "\r\nYou have to point to remote share folder using IP address instead of DNS name, So Remote Share folder should look like:\\\\10.10..\\SharefolderName."));
-                    else
-                        ErrorOccured?.Invoke(this, new Exception("Failed to connect to " + fromPath + "\r\nLastError = " + unc_from.LastError.ToString()));
-                     return ;
-                }
+                    fromPath.ConnectToUNC(false );
+                //unc_from = new UNCAccessWithCredentials() { AutoDispose = false };
+                //if (fromPath.IsPathHasUserName && (!unc_from.NetUseWithCredentials(fromPath.Path.Trim().TrimEnd('\\'), fromPath.UserName, fromPath.Domain, fromPath.Password) && unc_from.LastError != 1219))
+                //{
+                //    if (!fromPath.IsPathUNCStartswithIP)
+                //        ErrorOccured?.Invoke(this, new Exception("Failed to connect to " + fromPath + "\r\nYou have to point to remote share folder using IP address instead of DNS name, So Remote Share folder should look like:\\\\10.10..\\SharefolderName."));
+                //    else
+                //        ErrorOccured?.Invoke(this, new Exception("Failed to connect to " + fromPath + "\r\nLastError = " + unc_from.LastError.ToString()));
+                //     return ;
+                //}
             }
 
             
             if (toPath.IsUNC)
             {
-                unc_to = new UNCAccessWithCredentials() { AutoDispose = false };
-                if (toPath.IsPathHasUserName && (!unc_to.NetUseWithCredentials(toPath.Path.Trim().TrimEnd('\\'), toPath.UserName, toPath.Domain, toPath.Password) && unc_to.LastError != 1219))
-                {
-                    if (!toPath.IsPathUNCStartswithIP)
-                        ErrorOccured?.Invoke(this, new Exception("Failed to connect to " + toPath + "\r\nYou have to point to remote share folder using IP address instead of DNS name, So Remote Share folder should look like:\\\\10.10..\\SharefolderName."));
-                    else
-                        ErrorOccured?.Invoke(this, new Exception("Failed to connect to " + toPath + "\r\nLastError = " + unc_to.LastError.ToString()));
-                     return;
+                    toPath.ConnectToUNC(false );
+                //unc_to = new UNCAccessWithCredentials() { AutoDispose = false };
+                //if (toPath.IsPathHasUserName && (!unc_to.NetUseWithCredentials(toPath.Path.Trim().TrimEnd('\\'), toPath.UserName, toPath.Domain, toPath.Password) && unc_to.LastError != 1219))
+                //{
+                //    if (!toPath.IsPathUNCStartswithIP)
+                //        ErrorOccured?.Invoke(this, new Exception("Failed to connect to " + toPath + "\r\nYou have to point to remote share folder using IP address instead of DNS name, So Remote Share folder should look like:\\\\10.10..\\SharefolderName."));
+                //    else
+                //        ErrorOccured?.Invoke(this, new Exception("Failed to connect to " + toPath + "\r\nLastError = " + unc_to.LastError.ToString()));
+                //     return;
+                //}
                 }
-            }
 
 
 
@@ -187,12 +211,9 @@ namespace FolderMonitor
         {
             try
             {
-
-                if (unc_to != null)
-                    unc_to.Dispose();
-
-                if (unc_from != null)
-                    unc_from.Dispose();
+                fromPath.DisconnectFromUNC();
+                toPath.DisconnectFromUNC();
+              
 
                 if (process != null && !process.HasExited)
             {

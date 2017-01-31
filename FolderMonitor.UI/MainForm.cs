@@ -36,12 +36,12 @@ namespace FolderMonitor.UI
         bool __savestate = true;
         static ServiceManager _service = null;
 
-        
+
         public MainForm()
         {
             InitializeComponent();
 
-          
+
 
             // select the first item
             if (listView1.Items.Count > 0)
@@ -66,7 +66,7 @@ namespace FolderMonitor.UI
 
                 var tag = (PathFromAndTo)listView1.SelectedItems[0].Tag;
                 var log = Path.GetDirectoryName(FolderMonitorServicePath);
-                var foldername = tag.From.Path.GetFolderName ();
+                var foldername = tag.From.Path.GetFolderName();
                 log = Path.Combine(log, foldername + ".log");
 
                 txtlogs.Text = ReadFileAsString(log);
@@ -75,7 +75,7 @@ namespace FolderMonitor.UI
             }
             else
             {
-                
+
                 var log = Path.Combine(Path.GetDirectoryName(FolderMonitorServicePath), ServiceConfig.FolderMonitorLogFilename);
                 txtlogs.Text = ReadFileAsString(log);
                 txtlogs.Tag = log;
@@ -89,17 +89,17 @@ namespace FolderMonitor.UI
 
             try
             {
-                linkLabel1.Text =  fpath ;
-                linkLabel1.Tag  = fpath;
+                linkLabel1.Text = fpath;
+                linkLabel1.Tag = fpath;
                 if (File.Exists(fpath))
                 {
                     //if (checkBox1.Checked)
                     //    return ReadasLines(fpath);
-                    var fs = new FileStream(fpath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite );
+                    var fs = new FileStream(fpath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                     using (var sr = new StreamReader(fs))
                     {
                         var rr = sr.ReadToEnd() + "";
-                        fs.Close();fs.Dispose();sr.Dispose();
+                        fs.Close(); fs.Dispose(); sr.Dispose();
                         if (rr.Length > 1024 * 1000)
                             return rr.Substring(rr.Length - 1024 * 1000);
                         else
@@ -108,8 +108,8 @@ namespace FolderMonitor.UI
                     }
                 }
                 else
-                {                    
-                    return "Logfile does not exist yet!" + Environment.NewLine  + fpath;
+                {
+                    return "Logfile does not exist yet!" + Environment.NewLine + fpath;
                 }
             }
             finally
@@ -120,7 +120,7 @@ namespace FolderMonitor.UI
 
         }
 
-   
+
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             // simulate a click on the edit button when an item is double-clicked
@@ -170,8 +170,8 @@ namespace FolderMonitor.UI
             _savestate = true;
         }
 
-       
-      
+
+
 
 
 
@@ -205,12 +205,12 @@ namespace FolderMonitor.UI
             {
                 Cursor = Cursors.WaitCursor;
                 listView1.Items.Clear();
-                var ls = ServiceConfig.Default.GetAllTasks();
+                var ls = ServiceConfig.Default.GetAllTasks(false   );
 
                 foreach (var path in ls)
                 {
-                    AddTaskToListView(path );
-                   
+                    AddTaskToListView(path);
+
                 }
 
                 if (listView1.Items.Count > 0)
@@ -233,7 +233,7 @@ namespace FolderMonitor.UI
         void EnableDisableAllControls(bool Enable)
         {
             mainPanel.Enabled = addButton.Enabled = historyButton.Enabled = scheduleButton.Enabled =
-                   toolStripButton4.Enabled = toolStripButton1.Enabled= toolStripStatusLabel2.Enabled= Enable;
+                   toolStripButton4.Enabled = toolStripButton1.Enabled = toolStripStatusLabel2.Enabled = Enable;
 
             if (!Enable)
                 editButton.Enabled = removeButton.Enabled = false;
@@ -340,7 +340,7 @@ namespace FolderMonitor.UI
             }
             catch (Exception er)
             {
-                MessageBox.Show("You have to run folder monitor UI app in administrator mode" + Environment.NewLine + er.InnerMessages (), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You have to run folder monitor UI app in administrator mode" + Environment.NewLine + er.InnerMessages(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -366,15 +366,15 @@ namespace FolderMonitor.UI
                 catch (Exception er)
                 {
                     _service.Refresh();
-                    if (_service.Status != ServiceControllerStatus.Stopped && _service.Status != ServiceControllerStatus.StopPending )
+                    if (_service.Status != ServiceControllerStatus.Stopped && _service.Status != ServiceControllerStatus.StopPending)
                         _service.Stop();
                 }
-               
+
             }
             catch (Exception er)
             {
 
-                MessageBox.Show("You have to run folder monitor UI app in administrator mode" + Environment.NewLine + er.InnerMessages (), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You have to run folder monitor UI app in administrator mode" + Environment.NewLine + er.InnerMessages(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -387,12 +387,12 @@ namespace FolderMonitor.UI
 
         private void installservice_Click(object sender, EventArgs e)
         {
-            
+
             try
             {
                 Cursor = Cursors.WaitCursor;
                 statusInfo.Text = "Installing..";
-                
+
 
                 listView1.Items.Clear();
                 statusInfo.Image = Properties.Resources.info_16;
@@ -407,16 +407,17 @@ namespace FolderMonitor.UI
                 else
                 {
                     var app = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ServiceConfig.ServiceFilename);
-                    File.WriteAllBytes(app, Properties.Resources.FolderMonitor);
+                    if (!File.Exists(app))
+                        File.WriteAllBytes(app, Properties.Resources.FolderMonitor);
                     if (!File.Exists(app))
                         throw new Exception("FolderMonitor Service File does not exist!");
                     ManagedInstallerClass.InstallHelper(new string[] { app });
-
+                    _service = new ServiceManager();
 
                     if (_service.ServiceInstalled)
                     {
                         _FolderMonitorServicePath = "";
-                           configFile = Path.Combine(Path.GetDirectoryName(FolderMonitorServicePath), Path.GetFileName(FolderMonitorServicePath) + ".conf");
+                        configFile = Path.Combine(Path.GetDirectoryName(FolderMonitorServicePath), Path.GetFileName(FolderMonitorServicePath) + ".conf");
                         ServiceConfig._configFile = configFile;
                         LoadItems();
                     }
@@ -425,7 +426,7 @@ namespace FolderMonitor.UI
             }
             catch (Exception er)
             {
-                string req_files = string.Format("{0}{1}{0}", Environment.NewLine, ServiceConfig.ServiceFilename );
+                string req_files = string.Format("{0}{1}{0}", Environment.NewLine, ServiceConfig.ServiceFilename);
                 MessageBox.Show("Please make sure that this files are located in the same folder of Folder Monitor UI:" + req_files + Environment.NewLine + Environment.NewLine + er.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -450,7 +451,7 @@ namespace FolderMonitor.UI
                 CheckForRoboCopy();
             }
 
-           
+
 
         }
 
@@ -502,7 +503,7 @@ namespace FolderMonitor.UI
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            NewTask x = new NewTask(true );
+            NewTask x = new NewTask(true);
             if (x.ShowDialog() == DialogResult.OK)
             {
                 if (string.IsNullOrWhiteSpace(x.MirrorTask.From.Path)) return;
@@ -521,7 +522,7 @@ namespace FolderMonitor.UI
             if (listView1.SelectedIndices.Count == 0)
                 return;
             var paths = (PathFromAndTo)listView1.SelectedItems[0].Tag;
-            NewTask x = new NewTask(false );
+            NewTask x = new NewTask(false);
             x.MirrorTask = (PathFromAndTo)paths.Clone();
 
             if (x.ShowDialog() == DialogResult.OK)
@@ -534,7 +535,7 @@ namespace FolderMonitor.UI
                 if (!x.MirrorTask.From.PathExists())
                     lvi.ImageIndex = 1;
                 else
-                    lvi.ImageIndex = x.MirrorTask.From.IsPathHasUserName || x.MirrorTask.To .IsPathHasUserName ?3:0;
+                    lvi.ImageIndex = x.MirrorTask.From.IsPathHasUserName || x.MirrorTask.To.IsPathHasUserName ? 3 : 0;
 
                 _savestate = false;
             }
@@ -609,7 +610,7 @@ namespace FolderMonitor.UI
                 {
                     stopservice_Click(sender, e);
                     startservice_Click(sender, e);
-                    
+
                 }
             }
             catch (Exception er)
@@ -619,7 +620,8 @@ namespace FolderMonitor.UI
         }
 
         private void fileSystemWatcher1_Changed(object sender, FileSystemEventArgs e)
-        { if (InvokeRequired)
+        {
+            if (InvokeRequired)
             {
                 Invoke(new MethodInvoker(() => { fileSystemWatcher1_Changed(sender, e); }));
             }
@@ -688,6 +690,7 @@ namespace FolderMonitor.UI
         {
             if (item == null) return;
             var tag = (PathFromAndTo)item.Tag;
+            if (!tag.IsEnabled) return;
             var src = "The source folder of ";
             var trg = Environment.NewLine + "The target folder of ";
             item.ImageIndex = 2;
@@ -700,8 +703,8 @@ namespace FolderMonitor.UI
                 if (from_acc)
                 {
 
-                    item.ToolTipText = src + "this task seems good.";                   
-                        item.ImageIndex = 0;
+                    item.ToolTipText = src + "this task seems good.";
+                    item.ImageIndex = 0;
 
                 }
                 else
@@ -729,7 +732,7 @@ namespace FolderMonitor.UI
                 else
                 {
                     item.ToolTipText += trg + "this task has an issue.";
-                    if (item.ImageIndex == 2) item.ImageIndex = 1;
+                    if (item.ImageIndex !=1) item.ImageIndex = 4;
                 }
             }
             catch (Exception er)
@@ -742,14 +745,14 @@ namespace FolderMonitor.UI
                 if (item.SubItems.Count <= 2) item.SubItems.Add("");
                 item.SubItems[2].Text = item.ToolTipText;
                 item.ListView.AutoResizeColumn(2, ColumnHeaderAutoResizeStyle.ColumnContent);
-                if (item.ImageIndex != 0)
+                if (item.ImageIndex ==1)
                     item.ForeColor = System.Drawing.Color.Red;
                 else
                     item.ForeColor = System.Drawing.Color.Black;
 
                 if (item.ImageIndex != 1 && (tag.From.IsPathHasUserName || tag.To.IsPathHasUserName))
                     item.ImageIndex = 3;
-                
+
             }
         }
         private void validateAccessibilityToolStripMenuItem_Click(object sender, EventArgs e)
@@ -763,7 +766,7 @@ namespace FolderMonitor.UI
             if (listView1.SelectedItems.Count < 1) return;
             var tag = (PathFromAndTo)listView1.SelectedItems[0].Tag;
             var log = Path.GetDirectoryName(FolderMonitorServicePath);
-            var foldername = tag.From.Path.GetFolderName ();
+            var foldername = tag.From.Path.GetFolderName();
             log = Path.Combine(log, foldername + ".log");
             if (File.Exists(log))
                 Process.Start("notepad", log);
@@ -771,25 +774,25 @@ namespace FolderMonitor.UI
                 MessageBox.Show("The log file is not exist yet!" + Environment.NewLine + log, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-       
+
 
         string _copyformat = System.Windows.Forms.DataFormats.Serializable;
-     
+
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
             dynamic dd = Clipboard.GetData(_copyformat) as PathCredentials;
             if (dd == null)
                 dd = Clipboard.GetData(_copyformat) as PathFromAndTo;
-          
+
             pastCradintialsToolStripMenuItem.Enabled = dd != null;
 
-            contextMenuStrip1.Enabled = listView1.SelectedItems.Count > 0;
+            enabletaskToolStripMenuItem.Enabled = disableTaskToolStripMenuItem.Enabled = contextMenuStrip1.Enabled = listView1.SelectedItems.Count > 0;
             openSourceFolderToolStripMenuItem.Enabled = openTargetFolderToolStripMenuItem.Enabled = duplicateToolStripMenuItem.Enabled = editToolStripMenuItem.Enabled = robocopyLogsToolStripMenuItem.Enabled = copyToolStripMenuItem.Enabled = listView1.SelectedItems.Count == 1;
-            if( listView1.SelectedItems.Count > 0)
+            if (listView1.SelectedItems.Count > 0)
             {
-                var src= ((PathFromAndTo)listView1.SelectedItems[0].Tag).From.IsPathHasUserName; 
-                var trg= ((PathFromAndTo)listView1.SelectedItems[0].Tag).To .IsPathHasUserName;
+                var src = ((PathFromAndTo)listView1.SelectedItems[0].Tag).From.IsPathHasUserName;
+                var trg = ((PathFromAndTo)listView1.SelectedItems[0].Tag).To.IsPathHasUserName;
                 copySourceCredentialsToolStripMenuItem.Enabled = src;
                 copyTargetCredentialsToolStripMenuItem.Enabled = trg;
                 copySourceAndTargetCredentialsToolStripMenuItem.Enabled = src && trg;
@@ -801,8 +804,8 @@ namespace FolderMonitor.UI
         {
             if (listView1.SelectedItems.Count < 1) return;
             var item = listView1.SelectedItems[0];
-            NewTask x = new NewTask(true );
-            x.MirrorTask =(PathFromAndTo) ((PathFromAndTo)item.Tag).Clone ();
+            NewTask x = new NewTask(true);
+            x.MirrorTask = (PathFromAndTo)((PathFromAndTo)item.Tag).Clone();
 
             if (x.ShowDialog() == DialogResult.OK)
             {
@@ -819,6 +822,8 @@ namespace FolderMonitor.UI
             if (string.IsNullOrWhiteSpace(task.From.Path)) return false;
             ListViewItem lvi = new ListViewItem(task.From.Path, 0);
             lvi.SubItems.Add(task.To.Path);
+            lvi.SubItems.Add("");
+            lvi.SubItems.Add("");
             lvi.Tag = task;// new PathFromAndTo(task.From, task.To);
 
             if (!task.From.PathExists())
@@ -826,10 +831,27 @@ namespace FolderMonitor.UI
                 lvi.ImageIndex = 1;
                 lvi.ToolTipText = "Source folder does not exist or inaccessible.";
             }
-            
+
             if (lvi.ImageIndex == 0 && (task.From.IsPathHasUserName || task.To.IsPathHasUserName))
                 lvi.ImageIndex = 3;
 
+            if (!task.IsEnabled)
+            {
+                lvi.ForeColor = System.Drawing.Color.Gray;
+                lvi.Font = new System.Drawing.Font(lvi.Font, System.Drawing.FontStyle.Strikeout);
+                lvi.SubItems[3].Text ="No";
+                lvi.SubItems[3].BackColor = System.Drawing.Color.LightGray ;
+                lvi.ToolTipText = "This Task is not active.";
+                lvi.ImageIndex = 5;
+
+            }
+            else
+            {
+                // lvi.ForeColor = System.Drawing.Color.Black ;
+                // lvi.Font = new System.Drawing.Font(lvi.Font, System.Drawing.FontStyle.Regular);
+                lvi.SubItems[3].Text ="Yes";
+                lvi.SubItems[3].BackColor = System.Drawing.Color.White;
+            }
             listView1.Items.Add(lvi);
             return true;
         }
@@ -944,7 +966,7 @@ namespace FolderMonitor.UI
         private void toolStripStatusLabel2_Click(object sender, EventArgs e)
         {
             ConfigService x = new ConfigService(_service);
-           if( x.ShowDialog()== DialogResult.OK )
+            if (x.ShowDialog() == DialogResult.OK)
             {
 
             }
@@ -958,6 +980,38 @@ namespace FolderMonitor.UI
             else
                 MessageBox.Show("The log file is not exist yet!" + Environment.NewLine + log, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+        }
+
+        private void enabletaskToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var tag_t = ((ToolStripMenuItem)sender).Tag + "";
+            if (listView1.SelectedItems == null || listView1.SelectedItems.Count < 1) return;
+
+            foreach (ListViewItem item in listView1.SelectedItems)
+            {
+                var i = (PathFromAndTo)item.Tag;
+                if (tag_t == "1")
+                {
+
+                    i.IsEnabled = true;
+                    item.ForeColor = System.Drawing.Color.Black;
+                    item.Font = new System.Drawing.Font(item.Font, System.Drawing.FontStyle.Regular);
+                    CheckAccessibility(item);
+                    item.SubItems[3].Text = "Yes";
+                }
+                else if (tag_t == "0")
+                {
+
+                    i.IsEnabled = false;
+                    item.ForeColor = System.Drawing.Color.Gray;
+                    item.Font = new System.Drawing.Font(item.Font, System.Drawing.FontStyle.Strikeout);
+                    item.ImageIndex = 5;
+                    item.SubItems[3].Text = "No";
+                }
+
+
+            }
+            _savestate = false;
         }
     }
 }

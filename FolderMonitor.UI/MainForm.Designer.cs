@@ -64,6 +64,7 @@
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.openSourceFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openTargetFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.propertyGrid2 = new System.Windows.Forms.PropertyGrid();
@@ -96,7 +97,10 @@
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.enabletaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.disableTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip2.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -127,6 +131,7 @@
             this.imageList1.Images.SetKeyName(2, "1484661864_database_lightning.png");
             this.imageList1.Images.SetKeyName(3, "1484661845_database_key.png");
             this.imageList1.Images.SetKeyName(4, "1484661849_database_error.png");
+            this.imageList1.Images.SetKeyName(5, "1484661851_database_disable.png");
             // 
             // txtlogs
             // 
@@ -225,7 +230,8 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
-            this.columnHeader3});
+            this.columnHeader3,
+            this.columnHeader4});
             this.listView1.ContextMenuStrip = this.contextMenuStrip1;
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.FullRowSelect = true;
@@ -271,9 +277,12 @@
             this.pastCradintialsToolStripMenuItem,
             this.toolStripSeparator8,
             this.openSourceFolderToolStripMenuItem,
-            this.openTargetFolderToolStripMenuItem});
+            this.openTargetFolderToolStripMenuItem,
+            this.toolStripSeparator11,
+            this.enabletaskToolStripMenuItem,
+            this.disableTaskToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(185, 220);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(185, 292);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // duplicateToolStripMenuItem
@@ -429,6 +438,18 @@
             this.openTargetFolderToolStripMenuItem.Tag = "tgt";
             this.openTargetFolderToolStripMenuItem.Text = "Open Target Folder..";
             this.openTargetFolderToolStripMenuItem.Click += new System.EventHandler(this.openSourceFolderToolStripMenuItem_Click);
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.BackColor = System.Drawing.Color.White;
+            this.linkLabel1.Location = new System.Drawing.Point(2, 3);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(38, 13);
+            this.linkLabel1.TabIndex = 1;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Ready";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // splitContainer2
             // 
@@ -748,17 +769,33 @@
             this.pictureBox1.TabIndex = 1003;
             this.pictureBox1.TabStop = false;
             // 
-            // linkLabel1
+            // columnHeader4
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.BackColor = System.Drawing.Color.White;
-            this.linkLabel1.Location = new System.Drawing.Point(2, 3);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(38, 13);
-            this.linkLabel1.TabIndex = 1;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Ready";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.columnHeader4.Text = "Active Task";
+            this.columnHeader4.Width = 90;
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(181, 6);
+            // 
+            // enabletaskToolStripMenuItem
+            // 
+            this.enabletaskToolStripMenuItem.Image = global::FolderMonitor.UI.Properties.Resources.check;
+            this.enabletaskToolStripMenuItem.Name = "enabletaskToolStripMenuItem";
+            this.enabletaskToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.enabletaskToolStripMenuItem.Tag = "1";
+            this.enabletaskToolStripMenuItem.Text = "Enable Task";
+            this.enabletaskToolStripMenuItem.Click += new System.EventHandler(this.enabletaskToolStripMenuItem_Click);
+            // 
+            // disableTaskToolStripMenuItem
+            // 
+            this.disableTaskToolStripMenuItem.Image = global::FolderMonitor.UI.Properties.Resources.delete;
+            this.disableTaskToolStripMenuItem.Name = "disableTaskToolStripMenuItem";
+            this.disableTaskToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.disableTaskToolStripMenuItem.Tag = "0";
+            this.disableTaskToolStripMenuItem.Text = "Disable Task";
+            this.disableTaskToolStripMenuItem.Click += new System.EventHandler(this.enabletaskToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -874,5 +911,9 @@
         private System.Windows.Forms.ToolStripStatusLabel toolstatus;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel6;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+        private System.Windows.Forms.ToolStripMenuItem enabletaskToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem disableTaskToolStripMenuItem;
     }
 }

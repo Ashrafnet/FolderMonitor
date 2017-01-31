@@ -71,7 +71,7 @@ internal sealed partial class ServiceConfig
        
     }
 
-    public List<PathFromAndTo> GetAllTasks()
+    public List<PathFromAndTo> GetAllTasks(bool EnabaledOnly)
     {
 
         List<PathFromAndTo> items = new List<PathFromAndTo>();
@@ -80,15 +80,17 @@ internal sealed partial class ServiceConfig
         using (var sr = new FileStream(_configFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
         {
             XmlSerializer xs = new XmlSerializer(typeof(List<PathFromAndTo>));
-            items = (List<PathFromAndTo>)xs.Deserialize(sr);
+            var xitems = (List<PathFromAndTo>)xs.Deserialize(sr);
 
-            foreach (var item in items)
+            foreach (var item in xitems)
             {
+                if (EnabaledOnly && !item.IsEnabled) continue;
                 if (!string.IsNullOrWhiteSpace(item.From.Password))
                     item.From.Password = item.From.Password.Decrypts();
 
                 if (!string.IsNullOrWhiteSpace(item.To.Password))
                     item.To.Password = item.To.Password.Decrypts();
+                items.Add(item);
             }
             sr.Close();
 

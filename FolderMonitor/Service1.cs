@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.ServiceProcess;
 using System.IO;
 using System.Threading;
-using ICSharpCode.SharpZipLib.Zip;
 using System.Reflection;
 using Tools;
 using System.Linq;
@@ -19,6 +18,8 @@ namespace FolderMonitor
         public Service1()
         {
             InitializeComponent();
+            _logger.LogLevel = logType.All;
+            
         }
         public void startservice()
         {
@@ -26,17 +27,11 @@ namespace FolderMonitor
         }
         protected override void OnStart(string[] args)
         {
-            
-              //  Thread.Sleep(10000);
-            
-
             _ServiceName = this.ServiceName;
-            ////if (!string.IsNullOrWhiteSpace(username))
-            ////{
-            ////    Impersonator x = new Impersonator(username, domain, password);
-            ////}
-           StartMonitor();
+            _logger.LogWrite("Service Has been Started!");
+            StartMonitor();
         }
+
         private Timer timer1;
         long TIME_INTERVAL_IN_MILLISECONDS = 60 * 1000;
 
@@ -44,23 +39,29 @@ namespace FolderMonitor
       
         List<RoboCopyAgent> _watchers = new List<RoboCopyAgent>();
         FileOutputLogger _logger = new FileOutputLogger();
-        void StartMonitor()
+      public   void StartMonitor()
         {
             try
             {
-                _logger.LogLevel = logType.All;
-                _logger.LogWrite("Service Has been Started!");
-                //var xx = ServiceConfig.DoesRoboCopExist();
-                //if (xx)
-                //    throw new Exception("");
-                ServiceConfig._configFile =Path.Combine (AppDomain.CurrentDomain.BaseDirectory, ServiceConfig.ServiceConfigFilename );
-                foreach (var copyOp in ServiceConfig.Default. GetAllTasks())
+               
+              
+                ServiceConfig._configFile = System.IO.Path.Combine (AppDomain.CurrentDomain.BaseDirectory, ServiceConfig.ServiceConfigFilename );
+                var tasks = ServiceConfig.Default.GetAllTasks(true);
+                if (_watchers != null && _watchers.Count > 0)
+                {
+                    // tasks.FindIndex.
+
+
+                }
+                foreach (var copyOp in ServiceConfig.Default. GetAllTasks(true   ))
                 {
                     try
                     {                       
                         
                         if (string.IsNullOrWhiteSpace(copyOp.From.Path )) continue;
                         if (string.IsNullOrWhiteSpace(copyOp.To.Path )) continue;
+                        var inserted=_watchers.FindIndex(x=>x.fromPath.Path.ToLower(). Trim ().Trim("\\".ToCharArray ()) == copyOp.From.Path.ToLower().Trim().Trim("\\".ToCharArray()) && x.toPath .Path.ToLower().Trim().Trim("\\".ToCharArray()) == copyOp.To .Path.ToLower().Trim().Trim("\\".ToCharArray()));
+                        if (inserted > -1) continue;
                         if (!copyOp.From.PathExists())
                         {
 
@@ -68,37 +69,14 @@ namespace FolderMonitor
                             continue;
                         }
 
-                        var sync = new RoboCopyAgent(copyOp.From, copyOp.To );
-                        if (!string.IsNullOrWhiteSpace(copyOp.RoboCopy_Options))
-                            sync.RoboOptions = copyOp.RoboCopy_Options;
-                        var switches = new StringBuilder();
-                        if (copyOp.From .ExcludedFiles.Count > 0)
-                        {
-                            switches.Append(" /xf");
-                            foreach (string file in copyOp.From.ExcludedFiles)
-                                AppendPathOrWildcard(switches, copyOp.From.Path , file);
-                        }
-
-                        if (copyOp.From .ExcludedFolders.Count > 0)
-                        {
-                            switches.Append(" /xd");
-                            foreach (string folder in copyOp.From.ExcludedFolders)
-                                AppendPathOrWildcard(switches, copyOp.From.Path, folder);
-                        }
-
-                        if (!string.IsNullOrEmpty(copyOp.ExtendedAttributes))
-                        {
-                            switches.Append(" /copy:dat");
-                            switches.Append(copyOp.ExtendedAttributes);
-                        }
-
-                        sync.RoboOptions += switches.ToString ();
+                       //var cc= Alphaleonis.Win32.Filesystem.Directory.Copy(copyOp.From.Path, copyOp.To.Path, Alphaleonis.Win32.Filesystem.CopyOptions.Restartable, copy_progress,null );
+                        var sync = new RoboCopyAgent(copyOp );
+                       
                         sync.ErrorOccured += sync_ErrorOccured;
                         sync.DataReceivedOccured += Sync_DataReceivedOccured;
                         sync.Start();
-                        if (_watchers.FirstOrDefault(x => x.fromPath.Path.ToLower().Trim() == copyOp.From.Path.ToLower().Trim()
-                                                       && x.toPath.Path.ToLower().Trim() == copyOp.To .Path.ToLower().Trim()) == null)
-                            _watchers.Add(sync);
+                      
+                        _watchers.Add(sync);
                     }
                     catch (Exception er)
                     {
@@ -119,18 +97,10 @@ namespace FolderMonitor
             }
 
         }
-        private static void AppendPathOrWildcard(StringBuilder arguments, string folder, string pathOrWildcard)
-        {
-            // paths begin with a directory separator character
-            if (pathOrWildcard[0] == Path.DirectorySeparatorChar)
-                pathOrWildcard = Path.Combine(folder, pathOrWildcard.Substring(1));
 
-            arguments.Append(' ');
+     
 
-            // enforce enclosing double-quotes because if a volume shadow copy is used,
-            // the source volume will be replaced by the mount point which may contain spaces
-            arguments.Append(pathOrWildcard.QuoteForRobocopy ( force: true));
-        }
+     
         private void Sync_DataReceivedOccured(object sender, DataReceivedEventArgs e)
         {
             _logger.LogWrite("Sync_DataReceivedOccured Function: " + Environment.NewLine  + e.Data , logType.information );
@@ -145,7 +115,7 @@ namespace FolderMonitor
         bool IsPathDirectory(string path)
         {
             // get the file attributes for file or directory
-            FileAttributes attr = File.GetAttributes(path);
+            FileAttributes attr = System.IO.File.GetAttributes(path);
 
             //detect whether its a directory or file
             if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
@@ -155,7 +125,6 @@ namespace FolderMonitor
         }
      
 
-        public Queue<OperationInfo> _DoOperations { get; set; }
         bool ServiceStopping = false;
         protected override void OnStop()
         {
@@ -420,9 +389,11 @@ namespace FolderMonitor
         {
             try
             {
-              
+
+                timer1.Change(Timeout.Infinite, Timeout.Infinite);
 
                 if (ServiceStopping) return;
+                StartMonitor();
                 foreach (var item in _watchers)
                 {
                     if (item == null) continue;
@@ -432,43 +403,7 @@ namespace FolderMonitor
                     }
 
                 }
-            /*
-
-                if (!CheckFiles) return;
-                if (IsMovingFiles) return;
-
-                if (_watchers.Count > 0)
-                {
-                    foreach (var item in _watchers)
-                    {
-                        if (!CheckFiles) return;
-                        var to_orginal = "";
-                        var from = item.fromPath.Path; // d:\ashraf
-                        if (from[from.Length - 1] != Path.DirectorySeparatorChar)
-                            from += Path.DirectorySeparatorChar;
-                        var to = to_orginal = item.toPath.Path;   // \\10.10.143.3\ashrafk$\kamal
-
-                        if (string.IsNullOrWhiteSpace(from)) continue;
-                        if (string.IsNullOrWhiteSpace(to)) continue;
-                        if (!Directory.Exists(from)) continue;
-
-
-                        //var Src_Dir = Path.GetFileName(Path.GetDirectoryName(from));
-                        //to = Path.Combine(to, Src_Dir.Trim().Trim('$'));               // \\10.10.143.3\ashrafk$\ashraf
-
-                        if (from[from.Length - 1] != Path.DirectorySeparatorChar)
-                            from += Path.DirectorySeparatorChar;
-                        if (to[to.Length - 1] != Path.DirectorySeparatorChar)
-                            to += Path.DirectorySeparatorChar;
-
-                        deleteRemotefiles(from, to);
-                        Thread.Sleep(1000);
-                        copyDirectory(from, to);
-
-
-                    }
-
-                }*/
+          
 
             }
             catch (Exception er)
@@ -484,13 +419,12 @@ namespace FolderMonitor
         }
 
 
-        int isdateloged = 0;
         static string _ServiceName = "";
        static   bool copyFile(string src, string des)
         {
             try
             {
-                File.Copy(src, des, true);
+                System.IO.File.Copy(src, des, true);
                 return true;
             }
             catch (Exception er)
