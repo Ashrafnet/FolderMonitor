@@ -132,7 +132,8 @@ namespace FolderMonitor.UI
                 cmd += "password= " + password;
                 var i = new Tools.Impersonator(username, null, password);
                 i.Dispose();
-            }else
+            }
+            else
                 cmd += "obj= " + drpAccount.Text.Trim().Replace (" ","") ;
             var process = new Process();
           //  process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ashrafnet.FileSync
+namespace FolderMonitor
 {
     /// <summary>
     /// the logger interface

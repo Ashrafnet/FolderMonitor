@@ -11,7 +11,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 
-namespace RoboMirror.GUI
+namespace FolderMonitor.UI
 {
 	public partial class ExcludedItemsControl : UserControl
 	{

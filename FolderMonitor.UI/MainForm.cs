@@ -363,7 +363,9 @@ namespace FolderMonitor.UI
                 {
                     _service.Stop();
                 }
+#pragma warning disable CS0168 // The variable 'er' is declared but never used
                 catch (Exception er)
+#pragma warning restore CS0168 // The variable 'er' is declared but never used
                 {
                     _service.Refresh();
                     if (_service.Status != ServiceControllerStatus.Stopped && _service.Status != ServiceControllerStatus.StopPending)

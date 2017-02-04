@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-namespace RoboMirror
+namespace FolderMonitor
 {
 	[Flags]
 	public enum FileDropMode

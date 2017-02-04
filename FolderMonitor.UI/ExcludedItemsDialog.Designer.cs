@@ -34,9 +34,9 @@
             this.button1 = new System.Windows.Forms.Button();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.filesGroupBox = new System.Windows.Forms.GroupBox();
-            this.excludedFilesControl = new RoboMirror.GUI.ExcludedItemsControl();
+            this.excludedFilesControl = new FolderMonitor.UI.ExcludedItemsControl();
             this.foldersGroupBox = new System.Windows.Forms.GroupBox();
-            this.excludedFoldersControl = new RoboMirror.GUI.ExcludedItemsControl();
+            this.excludedFoldersControl = new FolderMonitor.UI.ExcludedItemsControl();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -153,7 +153,7 @@
             this.excludedFilesControl.BaseFolder = null;
             this.excludedFilesControl.Font = this.Font;
             this.excludedFilesControl.Location = new System.Drawing.Point(14, 22);
-            this.excludedFilesControl.Mode = RoboMirror.GUI.ExcludedItemsMode.Files;
+            this.excludedFilesControl.Mode = FolderMonitor.UI.ExcludedItemsMode.Files;
             this.excludedFilesControl.Name = "excludedFilesControl";
             this.excludedFilesControl.Size = new System.Drawing.Size(491, 145);
             this.excludedFilesControl.TabIndex = 0;
@@ -181,7 +181,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.excludedFoldersControl.BaseFolder = null;
             this.excludedFoldersControl.Location = new System.Drawing.Point(14, 22);
-            this.excludedFoldersControl.Mode = RoboMirror.GUI.ExcludedItemsMode.Folders;
+            this.excludedFoldersControl.Mode = FolderMonitor.UI.ExcludedItemsMode.Folders;
             this.excludedFoldersControl.Name = "excludedFoldersControl";
             this.excludedFoldersControl.Size = new System.Drawing.Size(482, 150);
             this.excludedFoldersControl.TabIndex = 0;
@@ -226,8 +226,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.SplitContainer splitContainer;
         private System.Windows.Forms.GroupBox filesGroupBox;
-        private RoboMirror.GUI.ExcludedItemsControl excludedFilesControl;
+        private FolderMonitor.UI.ExcludedItemsControl excludedFilesControl;
         private System.Windows.Forms.GroupBox foldersGroupBox;
-        private RoboMirror.GUI.ExcludedItemsControl excludedFoldersControl;
+        private FolderMonitor.UI.ExcludedItemsControl excludedFoldersControl;
     }
 }

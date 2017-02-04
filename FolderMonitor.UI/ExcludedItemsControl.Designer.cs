@@ -1,4 +1,4 @@
-﻿namespace RoboMirror.GUI
+﻿namespace FolderMonitor.UI
 {
 	partial class ExcludedItemsControl
 	{

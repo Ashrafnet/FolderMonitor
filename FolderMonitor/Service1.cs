@@ -4,12 +4,6 @@ using System.Diagnostics;
 using System.ServiceProcess;
 using System.IO;
 using System.Threading;
-using System.Reflection;
-using Tools;
-using System.Linq;
-using Ashrafnet.FileSync;
-using System.Xml.Serialization;
-using System.Text;
 
 namespace FolderMonitor
 {
@@ -69,7 +63,6 @@ namespace FolderMonitor
                             continue;
                         }
 
-                       //var cc= Alphaleonis.Win32.Filesystem.Directory.Copy(copyOp.From.Path, copyOp.To.Path, Alphaleonis.Win32.Filesystem.CopyOptions.Restartable, copy_progress,null );
                         var sync = new RoboCopyAgent(copyOp );
                        
                         sync.ErrorOccured += sync_ErrorOccured;
@@ -136,6 +129,8 @@ namespace FolderMonitor
                 item.Stop();
                     
             }
+            _logger.LogWrite("Service Has been Stopped!");
+
         }
 
 

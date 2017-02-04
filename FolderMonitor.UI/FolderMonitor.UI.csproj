@@ -79,147 +79,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\FolderMonitor\AlphaFS\NativeError.cs">
-      <Link>AlphaFS\NativeError.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\DfsInfo.cs">
-      <Link>AlphaFS\Network\DfsInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\DfsStorageInfo.cs">
-      <Link>AlphaFS\Network\DfsStorageInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\AccessPermissions.cs">
-      <Link>AlphaFS\Network\Enumerations\AccessPermissions.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\Connect.cs">
-      <Link>AlphaFS\Network\Enumerations\Connect.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\DfsNamespaceFlavors.cs">
-      <Link>AlphaFS\Network\Enumerations\DfsNamespaceFlavors.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\DfsPropertyFlags.cs">
-      <Link>AlphaFS\Network\Enumerations\DfsPropertyFlags.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\DfsStorageStates.cs">
-      <Link>AlphaFS\Network\Enumerations\DfsStorageStates.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\DfsTargetPriorityClass.cs">
-      <Link>AlphaFS\Network\Enumerations\DfsTargetPriorityClass.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\DfsVolumeStates.cs">
-      <Link>AlphaFS\Network\Enumerations\DfsVolumeStates.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\ResourceDisplayType.cs">
-      <Link>AlphaFS\Network\Enumerations\ResourceDisplayType.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\ResourceScope.cs">
-      <Link>AlphaFS\Network\Enumerations\ResourceScope.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\ResourceType.cs">
-      <Link>AlphaFS\Network\Enumerations\ResourceType.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\ResourceUsage.cs">
-      <Link>AlphaFS\Network\Enumerations\ResourceUsage.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\ShareInfoLevel.cs">
-      <Link>AlphaFS\Network\Enumerations\ShareInfoLevel.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\ShareResourceTypes.cs">
-      <Link>AlphaFS\Network\Enumerations\ShareResourceTypes.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Enumerations\ShareType.cs">
-      <Link>AlphaFS\Network\Enumerations\ShareType.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Host Class\Connect.cs">
-      <Link>AlphaFS\Network\Host Class\Connect.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Host Class\DriveConnection.cs">
-      <Link>AlphaFS\Network\Host Class\DriveConnection.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Host Class\EnumerateDrives.cs">
-      <Link>AlphaFS\Network\Host Class\EnumerateDrives.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Host Class\EnumerateOpenResources.cs">
-      <Link>AlphaFS\Network\Host Class\EnumerateOpenResources.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Host Class\Host.cs">
-      <Link>AlphaFS\Network\Host Class\Host.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Host Class\ServerMessageBlock.cs">
-      <Link>AlphaFS\Network\Host Class\ServerMessageBlock.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Methods\NativeMethods.cs">
-      <Link>AlphaFS\Network\Native Methods\NativeMethods.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Methods\NativeMethods.WindowsNetworking.cs">
-      <Link>AlphaFS\Network\Native Methods\NativeMethods.WindowsNetworking.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Structures\CONNECTION_INFO_1.cs">
-      <Link>AlphaFS\Network\Native Structures\CONNECTION_INFO_1.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Structures\DFS_INFO_200.cs">
-      <Link>AlphaFS\Network\Native Structures\DFS_INFO_200.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Structures\DFS_INFO_300.cs">
-      <Link>AlphaFS\Network\Native Structures\DFS_INFO_300.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Structures\DFS_INFO_9.cs">
-      <Link>AlphaFS\Network\Native Structures\DFS_INFO_9.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Structures\DFS_STORAGE_INFO_1.cs">
-      <Link>AlphaFS\Network\Native Structures\DFS_STORAGE_INFO_1.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Structures\DFS_TARGET_PRIORITY.cs">
-      <Link>AlphaFS\Network\Native Structures\DFS_TARGET_PRIORITY.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Structures\FILE_INFO_3.cs">
-      <Link>AlphaFS\Network\Native Structures\FILE_INFO_3.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Structures\NETRESOURCE.cs">
-      <Link>AlphaFS\Network\Native Structures\NETRESOURCE.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Structures\REMOTE_NAME_INFO.cs">
-      <Link>AlphaFS\Network\Native Structures\REMOTE_NAME_INFO.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Structures\SHARE_INFO_1.cs">
-      <Link>AlphaFS\Network\Native Structures\SHARE_INFO_1.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Structures\SHARE_INFO_1005.cs">
-      <Link>AlphaFS\Network\Native Structures\SHARE_INFO_1005.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Structures\SHARE_INFO_2.cs">
-      <Link>AlphaFS\Network\Native Structures\SHARE_INFO_2.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\Native Structures\SHARE_INFO_503.cs">
-      <Link>AlphaFS\Network\Native Structures\SHARE_INFO_503.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\OpenConnectionInfo.cs">
-      <Link>AlphaFS\Network\OpenConnectionInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\OpenResourceInfo.cs">
-      <Link>AlphaFS\Network\OpenResourceInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Network\ShareInfo.cs">
-      <Link>AlphaFS\Network\ShareInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\OperatingSystem.cs">
-      <Link>AlphaFS\OperatingSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Resources.Designer.cs">
-      <Link>AlphaFS\Resources.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\SafeGlobalMemoryBufferHandle.cs">
-      <Link>AlphaFS\SafeGlobalMemoryBufferHandle.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\SafeNativeMemoryBufferHandle.cs">
-      <Link>AlphaFS\SafeNativeMemoryBufferHandle.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Utils.cs">
-      <Link>AlphaFS\Utils.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\AlphaFS\Win32Errors.cs">
-      <Link>AlphaFS\Win32Errors.cs</Link>
-    </Compile>
     <Compile Include="..\FolderMonitor\clsEncrypt.cs">
       <Link>clsEncrypt.cs</Link>
     </Compile>
@@ -229,11 +88,47 @@
     <Compile Include="..\FolderMonitor\MyExtensions.cs">
       <Link>MyExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\FolderMonitor\Network\Connect.cs">
+      <Link>Network\Connect.cs</Link>
+    </Compile>
+    <Compile Include="..\FolderMonitor\Network\Enums\Connect.cs">
+      <Link>Network\Enums\Connect.cs</Link>
+    </Compile>
+    <Compile Include="..\FolderMonitor\Network\Enums\ResourceDisplayType.cs">
+      <Link>Network\Enums\ResourceDisplayType.cs</Link>
+    </Compile>
+    <Compile Include="..\FolderMonitor\Network\Enums\ResourceScope.cs">
+      <Link>Network\Enums\ResourceScope.cs</Link>
+    </Compile>
+    <Compile Include="..\FolderMonitor\Network\Enums\ResourceType.cs">
+      <Link>Network\Enums\ResourceType.cs</Link>
+    </Compile>
+    <Compile Include="..\FolderMonitor\Network\Enums\ResourceUsage.cs">
+      <Link>Network\Enums\ResourceUsage.cs</Link>
+    </Compile>
+    <Compile Include="..\FolderMonitor\Network\Native Structures\NETRESOURCE.cs">
+      <Link>Network\Native Structures\NETRESOURCE.cs</Link>
+    </Compile>
+    <Compile Include="..\FolderMonitor\Network\NativeMethods.WindowsNetworking.cs">
+      <Link>Network\NativeMethods.WindowsNetworking.cs</Link>
+    </Compile>
+    <Compile Include="..\FolderMonitor\Network\Resources.Designer.cs">
+      <Link>Network\Resources.Designer.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="..\FolderMonitor\Network\SafeGlobalMemoryBufferHandle.cs">
+      <Link>Network\SafeGlobalMemoryBufferHandle.cs</Link>
+    </Compile>
+    <Compile Include="..\FolderMonitor\Network\SafeNativeMemoryBufferHandle.cs">
+      <Link>Network\SafeNativeMemoryBufferHandle.cs</Link>
+    </Compile>
+    <Compile Include="..\FolderMonitor\Network\Win32Errors.cs">
+      <Link>Network\Win32Errors.cs</Link>
+    </Compile>
     <Compile Include="..\FolderMonitor\PathCredentials.cs">
       <Link>PathCredentials.cs</Link>
-    </Compile>
-    <Compile Include="..\FolderMonitor\UNCAccessWithCredentials.cs">
-      <Link>UNCAccessWithCredentials.cs</Link>
     </Compile>
     <Compile Include="ConfigService.cs">
       <SubType>Form</SubType>
@@ -254,6 +149,7 @@
       <DependentUpon>ExcludedItemsDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="FileDropTargetWrapper.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="NewTask.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -277,13 +173,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ServiceConfig.cs" />
     <Compile Include="ServiceManager.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WindowsServicesHelper.cs" />
-    <EmbeddedResource Include="..\FolderMonitor\AlphaFS\Resources.resx">
-      <Link>AlphaFS\Resources.resx</Link>
+    <EmbeddedResource Include="..\FolderMonitor\Network\Resources.resx">
+      <Link>Network\Resources.resx</Link>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ConfigService.resx">
       <DependentUpon>ConfigService.cs</DependentUpon>
@@ -305,14 +208,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="app.manifest" />
     <None Include="Ashrafnet.snk" />
     <None Include="FolderMonitor.UI_TemporaryKey.pfx" />
@@ -361,8 +259,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="appico.ico" />
-    <None Include="bin\Release\FolderMonitor.exe" />
     <None Include="Resources\FolderMonitor.exe" />
+    <None Include="bin\Release\FolderMonitor.exe" />
     <None Include="bin\Debug\FolderMonitor.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

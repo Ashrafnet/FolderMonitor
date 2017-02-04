@@ -3,10 +3,11 @@ using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 
-
+namespace FolderMonitor
+{
     public class Encryption
     {
-    private static  string _pass = "my_encr!@#123987";
+        private static string _pass = "my_encr!@#123987";
         /// <summary>
         /// Encrypt a string into a string using the default password
         /// </summary>
@@ -102,7 +103,7 @@ using System.Security.Cryptography;
             // using a dictionary attack - 
             // trying to guess a password by enumerating all possible words. 
             PasswordDeriveBytes pdb = new PasswordDeriveBytes(Password,
-                new byte[] {0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 
+                new byte[] {0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d,
             0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76});
 
             // Now get the key/IV and do the encryption using the
@@ -143,7 +144,7 @@ using System.Security.Cryptography;
             // using a dictionary attack - 
             // trying to guess a password by enumerating all possible words. 
             PasswordDeriveBytes pdb = new PasswordDeriveBytes(Password,
-                new byte[] {0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 
+                new byte[] {0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d,
             0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76});
 
             // Now get the key/IV and do the encryption using the function
@@ -180,7 +181,7 @@ using System.Security.Cryptography;
             // Then we are going to derive a Key and an IV from the
             // Password and create an algorithm 
             PasswordDeriveBytes pdb = new PasswordDeriveBytes(Password,
-                new byte[] {0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 
+                new byte[] {0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d,
             0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76});
 
             Rijndael alg = Rijndael.Create();
@@ -309,7 +310,7 @@ using System.Security.Cryptography;
             // using a dictionary attack - 
             // trying to guess a password by enumerating all possible words. 
             PasswordDeriveBytes pdb = new PasswordDeriveBytes(Password,
-                new byte[] {0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 
+                new byte[] {0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65,
             0x64, 0x76, 0x65, 0x64, 0x65, 0x76});
 
             // Now get the key/IV and do the decryption using
@@ -350,7 +351,7 @@ using System.Security.Cryptography;
             // using a dictionary attack - 
             // trying to guess a password by enumerating all possible words. 
             PasswordDeriveBytes pdb = new PasswordDeriveBytes(Password,
-                new byte[] {0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 
+                new byte[] {0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d,
             0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76});
 
             // Now get the key/IV and do the Decryption using the 
@@ -387,7 +388,7 @@ using System.Security.Cryptography;
             // Then we are going to derive a Key and an IV from
             // the Password and create an algorithm 
             PasswordDeriveBytes pdb = new PasswordDeriveBytes(Password,
-                new byte[] {0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 
+                new byte[] {0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d,
             0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76});
             Rijndael alg = Rijndael.Create();
 
@@ -424,3 +425,4 @@ using System.Security.Cryptography;
         }
     }
 
+}

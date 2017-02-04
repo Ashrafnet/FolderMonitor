@@ -1,12 +1,11 @@
-﻿using System;
+﻿using FolderMonitor.Network;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
-using System.Security;
-using System.Text;
 using System.Text.RegularExpressions;
 
 
@@ -83,7 +82,7 @@ namespace FolderMonitor
                 if (!IsUNC)
                     throw new Exception("You can't connect to local, it must be a UNC path such as \\\\fileserver\\sharename");
                 if (IsPathHasUserName)
-                    Network.Host.ConnectTo(Path , new System.Net.NetworkCredential(UserName, Password, Domain), false, false, false);
+                    Host.ConnectTo(Path , new System.Net.NetworkCredential(UserName, Password, Domain), false, false, false);
             }
             catch (Exception er)
             {
@@ -96,7 +95,7 @@ namespace FolderMonitor
         {
             try
             {
-                Network.Host.DisconnectFrom(Path , true, false);
+                Host.DisconnectFrom(Path , true, false);
 
             }
             catch
@@ -115,9 +114,9 @@ namespace FolderMonitor
 
             {
                 bool exist = false;
-                Network.Host.ConnectTo(Path, new System.Net.NetworkCredential(UserName, Password, Domain), false, false, false);
+                Host.ConnectTo(Path, new System.Net.NetworkCredential(UserName, Password, Domain), false, false, false);
                 exist= Directory.Exists(Path);
-                Network.Host.DisconnectFrom(Path, true, false);
+                Host.DisconnectFrom(Path, true, false);
                 if(!exist)
                     throw new Exception("Can't access to path:"+ Environment.NewLine + Path + Environment.NewLine + "*Note that, connect to above path using user '"+ UserName + "' was succeeded.");
 
@@ -216,7 +215,9 @@ namespace FolderMonitor
                 return Directory.Exists(Path);
 
             }
+#pragma warning disable CS0168 // The variable 'er' is declared but never used
             catch (Exception er)
+#pragma warning restore CS0168 // The variable 'er' is declared but never used
             {
                 if (throwException)
                     throw;

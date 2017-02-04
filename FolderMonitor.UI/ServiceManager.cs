@@ -17,9 +17,15 @@ namespace FolderMonitor.UI
         public static string _FolderMonitorServiceName = "DirectoryMonitor";
         #region Private : Fields
 
+#pragma warning disable CS0169 // The field 'ServiceManager.m_bExists' is never used
         private bool m_bExists;
+#pragma warning restore CS0169 // The field 'ServiceManager.m_bExists' is never used
+#pragma warning disable CS0169 // The field 'ServiceManager.m_bExistsAvailable' is never used
         private bool m_bExistsAvailable;
+#pragma warning restore CS0169 // The field 'ServiceManager.m_bExistsAvailable' is never used
+#pragma warning disable CS0169 // The field 'ServiceManager.m_sRemoteResource' is never used
         private string m_sRemoteResource;
+#pragma warning restore CS0169 // The field 'ServiceManager.m_sRemoteResource' is never used
         private ServiceStartMode m_eStartMode;
         private bool m_bStartModeAvailable;
 
