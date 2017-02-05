@@ -1,6 +1,8 @@
 # FolderMonitor
 Folder Monitor is a windows service for sync files and folders with nice GUI, it uses the robocopy tool.
-This tool is more than a robocopy, it extends its functionally to work with protected path, so you can assign a username and password, also, it resolves the un-join domain devices and give ability to connect to remote UNC shares using a username and password.
+
+FolderMonitor is more than a robocopy, it extends its functionally to work with protected paths, so you can assign a username and password, also, it resolves the un-join domain devices and give ability to connect to remote UNC shares using a username and password.
+FolderMonitor works as a windows service to make sure that your copy tasks work even if you didn't login to windows.
 
 <img src=/docs/mainwindow_0.8.PNG />
 
