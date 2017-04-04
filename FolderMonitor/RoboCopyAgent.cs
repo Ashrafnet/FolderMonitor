@@ -4,17 +4,18 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-
 
 namespace FolderMonitor
 {
-    class RoboCopyAgent
+    class RoboCopyAgent:IDisposable
     {
-        public RoboCopyAgent(PathCredentials fromPath, PathCredentials toPath)
+        public RoboCopyAgent(PathFromAndTo task)
         {
-            this.fromPath = fromPath;
-            this.toPath = toPath;
+            fromPath = task.From;
+            toPath = task.To;
+            Schduletask = task.ScheduleTask;
             if (this.fromPath.Path.Last() != '\\')
             {
                 this.fromPath.Path += "\\";
@@ -23,11 +24,9 @@ namespace FolderMonitor
             {
                 this.toPath.Path += "\\";
             }
-        }
-        public RoboCopyAgent(PathFromAndTo task):this(task.From,task.To )
-        {
             if (!string.IsNullOrWhiteSpace(task.RoboCopy_Options))
                 RoboOptions = task.RoboCopy_Options;
+
             var switches = new StringBuilder();
             if (task.From.ExcludedFiles.Count > 0)
             {
@@ -61,7 +60,7 @@ namespace FolderMonitor
 
         }
         public Process process { get; set; }
-        private Task backupTask;
+      //  private Task backupTask;
 
         /// <summary>
         /// Path to listen for changes
@@ -82,48 +81,173 @@ namespace FolderMonitor
 
         public event ErrorHandler ErrorOccured;
         public event DataReceivedEventHandler DataReceivedOccured;
-    
-
+        private Timer timer1;
+        long TIME_INTERVAL_IN_MILLISECONDS = 10 * 1000;
         public void Start()
         {
 
             try
             {
 
-          
-            if (fromPath.IsUNC)
-            {
-                    fromPath.ConnectToUNC(false );
-                //unc_from = new UNCAccessWithCredentials() { AutoDispose = false };
-                //if (fromPath.IsPathHasUserName && (!unc_from.NetUseWithCredentials(fromPath.Path.Trim().TrimEnd('\\'), fromPath.UserName, fromPath.Domain, fromPath.Password) && unc_from.LastError != 1219))
-                //{
-                //    if (!fromPath.IsPathUNCStartswithIP)
-                //        ErrorOccured?.Invoke(this, new Exception("Failed to connect to " + fromPath + "\r\nYou have to point to remote share folder using IP address instead of DNS name, So Remote Share folder should look like:\\\\10.10..\\SharefolderName."));
-                //    else
-                //        ErrorOccured?.Invoke(this, new Exception("Failed to connect to " + fromPath + "\r\nLastError = " + unc_from.LastError.ToString()));
-                //     return ;
-                //}
+                TimerCallback tmrCallBack = new TimerCallback(timer1_Tick);
+                timer1 = new Timer(tmrCallBack);
+                // have the timer starts in 1 second
+                timer1.Change(1, Timeout.Infinite );
+
+                
+
             }
-
-            
-            if (toPath.IsUNC)
+            catch (Exception er)
             {
-                    toPath.ConnectToUNC(false );
-                //unc_to = new UNCAccessWithCredentials() { AutoDispose = false };
-                //if (toPath.IsPathHasUserName && (!unc_to.NetUseWithCredentials(toPath.Path.Trim().TrimEnd('\\'), toPath.UserName, toPath.Domain, toPath.Password) && unc_to.LastError != 1219))
-                //{
-                //    if (!toPath.IsPathUNCStartswithIP)
-                //        ErrorOccured?.Invoke(this, new Exception("Failed to connect to " + toPath + "\r\nYou have to point to remote share folder using IP address instead of DNS name, So Remote Share folder should look like:\\\\10.10..\\SharefolderName."));
-                //    else
-                //        ErrorOccured?.Invoke(this, new Exception("Failed to connect to " + toPath + "\r\nLastError = " + unc_to.LastError.ToString()));
-                //     return;
-                //}
+                ErrorOccured?.Invoke(this, er);
+            }
+        }
+        private void timer1_Tick(object sender)
+        {
+            try
+            {
+                var task = ServiceConfig.Default.GetTask(fromPath.Path, toPath.Path );
+                if(task!=null)
+                {
+                    if (!task.IsEnabled) //first check if task become disabled
+                    {
+                        Stop();
+                        IsRunning = false;
+                        return;
+                    }
+
+                    fromPath = task.From;
+                    toPath = task.To;
+                    Schduletask = task.ScheduleTask;
+
+                  
                 }
+                bool CanRunNow = false, MustStop = false;
+                if (Schduletask == null || !Schduletask.IsEnabled)
+                {
+                    if (IsRunning)
+                        return;
+                    CanRunNow = true;
+                }
+                else if (Schduletask != null && Schduletask.IsEnabled)
+                {
+                    if (Schduletask.EndTime.HasValue)// if schduled enabled  then check the end time
+                    {
+                        switch (Schduletask.EndTime_Type)
+                        {
+                            case EndOnType.SameStartTime:
+                                if(!LastRunOn.HasValue && Schduletask.EndTime.Value.TimeOfDay <= DateTime.Now.TimeOfDay) //didn't run yet
+                                    MustStop = true;
+                                else  if (LastRunOn.HasValue && DateTime.Now.Date >= LastRunOn.Value.Date && Schduletask.EndTime.Value.TimeOfDay <= DateTime.Now.TimeOfDay)
+                                    MustStop = true;
+                                break;
+                            case EndOnType.NextDay:
+                                if (!LastRunOn.HasValue && DateTime.Now.Date >= Schduletask.EndTime.Value.Date .AddDays(1) && Schduletask.EndTime.Value.TimeOfDay <= DateTime.Now.TimeOfDay) //didn't run yet
+                                    MustStop = true;
+                                else
+                               if (LastRunOn.HasValue && DateTime.Now.Date >= LastRunOn.Value.Date.AddDays(1) && Schduletask.EndTime.Value.TimeOfDay <= DateTime.Now.TimeOfDay)
+                                    MustStop = true;
+                                break;
+
+                            case EndOnType.After_2_days:
+                                if (!LastRunOn.HasValue && DateTime.Now.Date >= Schduletask.EndTime.Value.Date.AddDays(2) && Schduletask.EndTime.Value.TimeOfDay <= DateTime.Now.TimeOfDay) //didn't run yet
+                                    MustStop = true;
+                                else
+                               if (LastRunOn.HasValue && DateTime.Now.Date >= LastRunOn.Value.Date.AddDays(2) && Schduletask.EndTime.Value.TimeOfDay <= DateTime.Now.TimeOfDay)
+                                    MustStop = true;
+                                break;
+
+                            case EndOnType.After_3_days:
+                                if (!LastRunOn.HasValue && DateTime.Now.Date >= Schduletask.EndTime.Value.Date.AddDays(3) && Schduletask.EndTime.Value.TimeOfDay <= DateTime.Now.TimeOfDay) //didn't run yet
+                                    MustStop = true;
+                                else
+                               if (LastRunOn.HasValue && DateTime.Now.Date >= LastRunOn.Value.Date.AddDays(3) && Schduletask.EndTime.Value.TimeOfDay <= DateTime.Now.TimeOfDay)
+                                    MustStop = true;
+                                break;
+                            case EndOnType.After_5_days:
+                                if (!LastRunOn.HasValue && DateTime.Now.Date >= Schduletask.EndTime.Value.Date.AddDays(5) && Schduletask.EndTime.Value.TimeOfDay <= DateTime.Now.TimeOfDay) //didn't run yet
+                                    MustStop = true;
+                                else
+                               if (LastRunOn.HasValue && DateTime.Now.Date >= LastRunOn.Value.Date.AddDays(5) && Schduletask.EndTime.Value.TimeOfDay <= DateTime.Now.TimeOfDay)
+                                    MustStop = true;
+                                break;
+                            case EndOnType.After_7_days:
+                                if (!LastRunOn.HasValue && DateTime.Now.Date >= Schduletask.EndTime.Value.Date.AddDays(7) && Schduletask.EndTime.Value.TimeOfDay <= DateTime.Now.TimeOfDay) //didn't run yet
+                                    MustStop = true;
+                                else
+                               if (LastRunOn.HasValue && DateTime.Now.Date >= LastRunOn.Value.Date.AddDays(7) && Schduletask.EndTime.Value.TimeOfDay <= DateTime.Now.TimeOfDay)
+                                    MustStop = true;
+                                break;
+                            default:
+                                break;
+                        }
+                        if (MustStop)
+                        {
+                            Stop();
+                            return;
+                        }
+                    }
+
+                    switch (Schduletask.Triggertype)
+                    {
+                        case TriggerType.Daily:
+                            if (DateTime.Now >= Schduletask.StartTime)
+                                if (!LastRunOn.HasValue)
+                                    CanRunNow = true;
+                                else if (LastRunOn.HasValue && LastRunOn.Value.Date != DateTime.Now.Date)
+                                    CanRunNow = true;
+                            break;
+                        case TriggerType.Weekly:
+                            if (DateTime.Now.DayOfWeek == Schduletask.StartTime.DayOfWeek &&
+                                (DateTime.Now.Hour >= Schduletask.StartTime.Hour || (DateTime.Now.Hour == Schduletask.StartTime.Hour && DateTime.Now.Minute >= Schduletask.StartTime.Minute)))
+                                CanRunNow = true;
+                            break;
+                        case TriggerType.Monthly:
+                            if (DateTime.Now.Day == Schduletask.StartTime.Day &&
+                               (DateTime.Now.Hour >= Schduletask.StartTime.Hour || (DateTime.Now.Hour == Schduletask.StartTime.Hour && DateTime.Now.Minute >= Schduletask.StartTime.Minute)))
+                                CanRunNow = true;
+                            break;
+                        default:
+                            break;
+                    }
+
+                  
 
 
-
-            backupTask = Task.Factory.StartNew(() =>
+                }
+                if (CanRunNow && !IsRunning)
+                {
+                    thrd = new Thread(RunRoboCopyProcess);
+                    thrd.Start();
+                }
+            }
+            catch (Exception er)
             {
+                ErrorOccured?.Invoke(this, er);
+            }
+            finally
+            {
+                // have the timer starts in 1 second, and then fire once every min
+                timer1.Change(TIME_INTERVAL_IN_MILLISECONDS, Timeout.Infinite );
+            }
+        }
+
+        bool IsRunning = false;
+        DateTime? LastRunOn = null;
+        Thread thrd;
+        private void RunRoboCopyProcess()
+        {
+
+            try
+            {
+                IsRunning = true;
+                LastRunOn = DateTime.Now;
+                if (fromPath.IsUNC)
+                    fromPath.ConnectToUNC(false);
+
+                if (toPath.IsUNC)
+                    toPath.ConnectToUNC(false);
+
                 process = new Process();
                 process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 process.StartInfo.UseShellExecute = false;
@@ -148,19 +272,20 @@ namespace FolderMonitor
                 process.BeginOutputReadLine();
                 process.BeginErrorReadLine();
                 process.WaitForExit();
-            });
-
-            backupTask.ContinueWith((continuation) =>
-            {
-
-                Stop();
-            });
-
+               IsRunning = process.ExitCode == 0;
             }
             catch (Exception er)
             {
-                ErrorOccured?.Invoke(this,er);              
+                IsRunning = false;
+                LastRunOn = null;
+                ErrorOccured?.Invoke(this, er);
             }
+            finally
+            {
+                Stop();
+            }
+
+
         }
 
         private void process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
@@ -188,6 +313,8 @@ namespace FolderMonitor
             }
         }
 
+        public ScheduleTime Schduletask { get; private set; }
+
         private string GenerateParameters()
         {
             //robocopy \\SourceServer\Share \\DestinationServer\Share /MIR /FFT /Z /W:5
@@ -204,28 +331,58 @@ namespace FolderMonitor
             return parms;
         }
 
-      
 
-       
-        public  void Stop()
+
+
+        public void Stop()
         {
             try
             {
                 fromPath.DisconnectFromUNC();
                 toPath.DisconnectFromUNC();
-              
+
 
                 if (process != null && !process.HasExited)
-            {
-                process.Kill();
-                process.Dispose();
-                process = null;
-            }
+                {
+                    process.Kill();
+                   
+                }
             }
             catch (Exception er)
             {
                 ErrorOccured?.Invoke(this, er);
             }
+            finally
+            {
+               // IsRunning = false;
+            }
+        }
+
+        public void Dispose()
+        {
+            try
+            {
+                timer1.Change(Timeout.Infinite, Timeout.Infinite);
+                timer1.Dispose();
+                timer1 = null;
+                thrd.Abort();
+                thrd = null;
+                Stop();
+                if (process != null)
+                {
+                    process.Dispose();
+                    process = null;
+                }
+                if (DataReceivedOccured != null)
+                    DataReceivedOccured = null;
+
+                if (ErrorOccured != null)
+                    ErrorOccured = null;
+            }
+            catch(Exception er)
+            {
+            }
+
         }
     }
 }

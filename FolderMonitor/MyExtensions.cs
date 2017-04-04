@@ -142,5 +142,15 @@ namespace FolderMonitor
             // the source volume will be replaced by the mount point which may contain spaces
             arguments.Append(pathOrWildcard.QuoteForRobocopy(force: true));
         }
+
+        public static DateTime StartOfMinute(this DateTime date)
+        {
+            
+            return date.Floor(TimeSpan.FromMinutes(1));
+        }
+        public static DateTime Floor(this DateTime date, TimeSpan interval)
+        {
+            return date.AddTicks(-(date.Ticks % interval.Ticks));
+        }
     }
 }

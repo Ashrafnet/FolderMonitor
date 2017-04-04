@@ -20,10 +20,11 @@ namespace FolderMonitor.UI
         {
             _NewTask = NewOrEditTask;
             InitializeComponent();
+            intervalComboBox.SelectedIndex =endon_type.SelectedIndex = 0;
             MirrorTask = new PathFromAndTo();
             MirrorTask.RoboCopy_Options = ServiceConfig.RoboCopyOptions;
             if (!_NewTask)
-                Text = "Edit Task*";
+                Text = "Edit Task";
         }
 
         public PathFromAndTo MirrorTask { get; set; }
@@ -59,6 +60,20 @@ namespace FolderMonitor.UI
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            if(MirrorTask!=null)
+            {
+                schedul_enable.Checked = MirrorTask.ScheduleTask==null ?false : MirrorTask.ScheduleTask.IsEnabled;
+                if (MirrorTask.ScheduleTask != null)
+                {
+                    intervalComboBox.SelectedIndex =(int) MirrorTask.ScheduleTask.Triggertype;
+                    Startdate.Value = MirrorTask.ScheduleTask.StartTime;
+                    Starttime.Value = MirrorTask.ScheduleTask.StartTime;
+
+                    endon_enabled.Checked = MirrorTask.ScheduleTask.EndTime .HasValue ;
+                  if(MirrorTask.ScheduleTask.EndTime.HasValue)  endon_time.Value = MirrorTask.ScheduleTask.EndTime.Value;
+                    endon_type.SelectedIndex = (int)MirrorTask.ScheduleTask.EndTime_Type ;
+                }
+            }
             if (MirrorTask.From != null)
             {
                 sourceFolderTextBox.Text = MirrorTask.From.Path;
@@ -201,7 +216,23 @@ namespace FolderMonitor.UI
             {
                 MirrorTask. From.Path = sourceFolderTextBox.Text;
                 MirrorTask. To.Path = targetFolderTextBox.Text;
+                if (schedul_enable.Checked)
+                {
+                    MirrorTask.ScheduleTask = new ScheduleTime();
+                    MirrorTask.ScheduleTask.IsEnabled = true;
+                    MirrorTask.ScheduleTask.Triggertype = (TriggerType)intervalComboBox.SelectedIndex;
+                    MirrorTask.ScheduleTask.StartTime = new DateTime(Startdate.Value.Year, Startdate.Value.Month, Startdate.Value.Day, Starttime.Value.Hour, Starttime.Value.Minute, Starttime.Value.Second);
+                    if (endon_enabled.Checked)
+                    {
+                        MirrorTask.ScheduleTask.EndTime = endon_time.Value ;
+                        MirrorTask.ScheduleTask.EndTime_Type = (EndOnType)endon_type.SelectedIndex;
 
+                    }
+                    else
+                        MirrorTask.ScheduleTask.EndTime = null;
+                }
+                else
+                    MirrorTask.ScheduleTask = null;
               
 
                 if (robocopySwitchesCheckBox.Checked)
@@ -293,6 +324,16 @@ namespace FolderMonitor.UI
                 Text += " (Inactive Task)";
                 BackColor = Color.LightGray;
             }
+        }
+
+        private void schedul_enable_CheckedChanged(object sender, EventArgs e)
+        {
+            panel1.Enabled = schedul_enable.Checked ;
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            endon_type.Enabled = endon_time.Enabled = endon_enabled.Checked;
         }
     }
 }

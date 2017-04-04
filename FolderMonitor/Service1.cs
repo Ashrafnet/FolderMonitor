@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.ServiceProcess;
 using System.IO;
+using System.ServiceProcess;
 using System.Threading;
-
+using System.Linq;
 namespace FolderMonitor
 {
     public partial class Service1 : ServiceBase
@@ -27,7 +27,7 @@ namespace FolderMonitor
         }
 
         private Timer timer1;
-        long TIME_INTERVAL_IN_MILLISECONDS = 60 * 1000;
+        long TIME_INTERVAL_IN_MILLISECONDS = 60 * 100;
 
 
       
@@ -40,25 +40,45 @@ namespace FolderMonitor
                
               
                 ServiceConfig._configFile = System.IO.Path.Combine (AppDomain.CurrentDomain.BaseDirectory, ServiceConfig.ServiceConfigFilename );
-                var tasks = ServiceConfig.Default.GetAllTasks(true);
-                if (_watchers != null && _watchers.Count > 0)
-                {
-                    // tasks.FindIndex.
-
-
-                }
-                foreach (var copyOp in ServiceConfig.Default. GetAllTasks(true   ))
+                var tasks = ServiceConfig.Default.GetAllTasks(false );
+              
+                foreach (var copyOp in tasks)
                 {
                     try
-                    {                       
-                        
+                    {   
                         if (string.IsNullOrWhiteSpace(copyOp.From.Path )) continue;
                         if (string.IsNullOrWhiteSpace(copyOp.To.Path )) continue;
-                        var inserted=_watchers.FindIndex(x=>x.fromPath.Path.ToLower(). Trim ().Trim("\\".ToCharArray ()) == copyOp.From.Path.ToLower().Trim().Trim("\\".ToCharArray()) && x.toPath .Path.ToLower().Trim().Trim("\\".ToCharArray()) == copyOp.To .Path.ToLower().Trim().Trim("\\".ToCharArray()));
-                        if (inserted > -1) continue;
+                        var inserted=_watchers.FindIndex(x=>x.fromPath.Path.ToLower().Trim ().Trim( "\\".ToCharArray ()) == copyOp.From.Path.ToLower().Trim().Trim("\\".ToCharArray()) && x.toPath .Path.ToLower().Trim().Trim("\\".ToCharArray()) == copyOp.To .Path.ToLower().Trim().Trim("\\".ToCharArray()));
+                        if (inserted > -1)
+                        {
+                            if (!copyOp.IsEnabled)
+                            {
+                                _watchers[inserted].Dispose();
+                                _watchers[inserted] = null;
+                                _watchers.RemoveAt(inserted);
+                            }
+                            continue;
+                        }
+                       
+
+                        //now find the deleted tasks
+                        var deletedItems = _watchers.Where
+                        (c => !tasks.Any(d => c.fromPath.Path.ToLower().Trim().Trim("\\".ToCharArray()) == d.From.Path.ToLower().Trim().Trim("\\".ToCharArray()) && c.toPath.Path.ToLower().Trim().Trim("\\".ToCharArray()) == d.To.Path.ToLower().Trim().Trim("\\".ToCharArray()))).ToList();
+                        if(deletedItems!=null && deletedItems.Count > 0)
+                        {
+                            for (int i = 0; i < deletedItems.Count ; i++)
+                                                     
+                            {
+                                deletedItems[i].Dispose();                               
+                                _watchers.Remove(deletedItems[i]);
+                                deletedItems[i] = null;
+                            }
+                            
+
+                        }
+                        if (!copyOp.IsEnabled) continue; // only pass enabled tasks
                         if (!copyOp.From.PathExists())
                         {
-
                             _logger.LogWrite("StartMonitor Function.\n" + "Dirctory '" + copyOp.From.Path + "' does not exist.", logType.Error);
                             continue;
                         }
@@ -73,9 +93,7 @@ namespace FolderMonitor
                     }
                     catch (Exception er)
                     {
-
                         _logger.LogWrite("StartMonitor Function.\n" + er.InnerMessages(), logType.Error);
-
                     }
                 }
             }
@@ -389,15 +407,7 @@ namespace FolderMonitor
 
                 if (ServiceStopping) return;
                 StartMonitor();
-                foreach (var item in _watchers)
-                {
-                    if (item == null) continue;
-                    if (item.process!=null && item.process.HasExited)
-                    {
-                        item.Start();
-                    }
-
-                }
+             
           
 
             }

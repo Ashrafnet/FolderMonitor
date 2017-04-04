@@ -99,6 +99,15 @@ namespace FolderMonitor
             }
         }
 
+        public PathFromAndTo GetTask(string from_path,string to_path)
+        {
+
+          return   GetAllTasks(false ).FirstOrDefault(x => 
+                   from_path.ToLower().Trim().Trim("\\".ToCharArray()) == x.From.Path.ToLower().Trim().Trim("\\".ToCharArray()) &&
+                   x.To .Path.ToLower().Trim().Trim("\\".ToCharArray()) == to_path.ToLower().Trim().Trim("\\".ToCharArray()
+                   ));
+        }
+
 
     }
 }

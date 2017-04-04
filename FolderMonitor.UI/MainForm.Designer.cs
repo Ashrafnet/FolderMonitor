@@ -43,6 +43,7 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,6 +65,9 @@
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.openSourceFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openTargetFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.enabletaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.disableTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
@@ -97,10 +101,7 @@
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-            this.enabletaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.disableTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip2.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -231,7 +232,8 @@
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
-            this.columnHeader4});
+            this.columnHeader4,
+            this.columnHeader5});
             this.listView1.ContextMenuStrip = this.contextMenuStrip1;
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.FullRowSelect = true;
@@ -263,6 +265,11 @@
             this.columnHeader3.Text = "Accessibility Notes";
             this.columnHeader3.Width = 120;
             // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Active Task";
+            this.columnHeader4.Width = 90;
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -282,7 +289,7 @@
             this.enabletaskToolStripMenuItem,
             this.disableTaskToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(185, 292);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(185, 270);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // duplicateToolStripMenuItem
@@ -438,6 +445,29 @@
             this.openTargetFolderToolStripMenuItem.Tag = "tgt";
             this.openTargetFolderToolStripMenuItem.Text = "Open Target Folder..";
             this.openTargetFolderToolStripMenuItem.Click += new System.EventHandler(this.openSourceFolderToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(181, 6);
+            // 
+            // enabletaskToolStripMenuItem
+            // 
+            this.enabletaskToolStripMenuItem.Image = global::FolderMonitor.UI.Properties.Resources.check;
+            this.enabletaskToolStripMenuItem.Name = "enabletaskToolStripMenuItem";
+            this.enabletaskToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.enabletaskToolStripMenuItem.Tag = "1";
+            this.enabletaskToolStripMenuItem.Text = "Enable Task";
+            this.enabletaskToolStripMenuItem.Click += new System.EventHandler(this.enabletaskToolStripMenuItem_Click);
+            // 
+            // disableTaskToolStripMenuItem
+            // 
+            this.disableTaskToolStripMenuItem.Image = global::FolderMonitor.UI.Properties.Resources.delete;
+            this.disableTaskToolStripMenuItem.Name = "disableTaskToolStripMenuItem";
+            this.disableTaskToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.disableTaskToolStripMenuItem.Tag = "0";
+            this.disableTaskToolStripMenuItem.Text = "Disable Task";
+            this.disableTaskToolStripMenuItem.Click += new System.EventHandler(this.enabletaskToolStripMenuItem_Click);
             // 
             // linkLabel1
             // 
@@ -769,33 +799,9 @@
             this.pictureBox1.TabIndex = 1003;
             this.pictureBox1.TabStop = false;
             // 
-            // columnHeader4
+            // columnHeader5
             // 
-            this.columnHeader4.Text = "Active Task";
-            this.columnHeader4.Width = 90;
-            // 
-            // toolStripSeparator11
-            // 
-            this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(181, 6);
-            // 
-            // enabletaskToolStripMenuItem
-            // 
-            this.enabletaskToolStripMenuItem.Image = global::FolderMonitor.UI.Properties.Resources.check;
-            this.enabletaskToolStripMenuItem.Name = "enabletaskToolStripMenuItem";
-            this.enabletaskToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.enabletaskToolStripMenuItem.Tag = "1";
-            this.enabletaskToolStripMenuItem.Text = "Enable Task";
-            this.enabletaskToolStripMenuItem.Click += new System.EventHandler(this.enabletaskToolStripMenuItem_Click);
-            // 
-            // disableTaskToolStripMenuItem
-            // 
-            this.disableTaskToolStripMenuItem.Image = global::FolderMonitor.UI.Properties.Resources.delete;
-            this.disableTaskToolStripMenuItem.Name = "disableTaskToolStripMenuItem";
-            this.disableTaskToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.disableTaskToolStripMenuItem.Tag = "0";
-            this.disableTaskToolStripMenuItem.Text = "Disable Task";
-            this.disableTaskToolStripMenuItem.Click += new System.EventHandler(this.enabletaskToolStripMenuItem_Click);
+            this.columnHeader5.Text = "Schedule";
             // 
             // MainForm
             // 
@@ -915,5 +921,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripMenuItem enabletaskToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem disableTaskToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
     }
 }

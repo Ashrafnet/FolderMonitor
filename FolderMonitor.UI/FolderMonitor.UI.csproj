@@ -150,6 +150,7 @@
     </Compile>
     <Compile Include="FileDropTargetWrapper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="LogFileReader.cs" />
     <Compile Include="NewTask.cs">
       <SubType>Form</SubType>
     </Compile>

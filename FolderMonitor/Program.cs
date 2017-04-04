@@ -13,9 +13,9 @@ namespace FolderMonitor
         static void Main()
         {
 
-           
 
-#if DEBUG
+
+#if !DEBUG
 
             var s = new Service1();
             s.StartMonitor();

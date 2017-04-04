@@ -7,7 +7,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text.RegularExpressions;
-
+using System.Threading.Tasks;
 
 namespace FolderMonitor
 {
@@ -73,7 +73,7 @@ namespace FolderMonitor
                 return  @"\\" + System.IO.Path.Combine(GetHostNameOfUNCPath(), "IPC$");
             }
         }
-        public void ConnectToUNC(bool throwException)
+        public  void ConnectToUNC(bool throwException)
         {
             try
             {
@@ -82,7 +82,8 @@ namespace FolderMonitor
                 if (!IsUNC)
                     throw new Exception("You can't connect to local, it must be a UNC path such as \\\\fileserver\\sharename");
                 if (IsPathHasUserName)
-                    Host.ConnectTo(Path , new System.Net.NetworkCredential(UserName, Password, Domain), false, false, false);
+                    Host.ConnectTo(Path, new System.Net.NetworkCredential(UserName, Password, Domain), false, false, false);
+
             }
             catch (Exception er)
             {
@@ -90,6 +91,8 @@ namespace FolderMonitor
                     throw new Exception (er.InnerMessages ()+Environment.NewLine + "*trying to connect to " + Path );
             }
         }
+
+      
 
         public void DisconnectFromUNC()
         {
@@ -202,7 +205,7 @@ namespace FolderMonitor
         {
             try
             {
-
+                
                 if (IsPathHasUserName & !IsUNC)
                 {
                     using (Tools.Impersonator i = new Tools.Impersonator(UserName, Domain, Password))
@@ -254,6 +257,7 @@ namespace FolderMonitor
         public string ExtendedAttributes { get;  set; }
         public bool IsEnabled { get;  set; }
 
+        public ScheduleTime ScheduleTask { get; set; }
         public PathFromAndTo()
         {
             From = new PathCredentials ();
@@ -284,6 +288,7 @@ namespace FolderMonitor
             var cc = new PathFromAndTo();
             cc.From =(PathCredentials ) From.Clone();
             cc.To =(PathCredentials) To.Clone();
+           if(ScheduleTask!=null ) cc.ScheduleTask =(ScheduleTime) ScheduleTask.Clone();
             cc.RoboCopy_Options = RoboCopy_Options;
             cc.ExtendedAttributes = ExtendedAttributes;
             cc.IsEnabled = IsEnabled;
@@ -291,7 +296,49 @@ namespace FolderMonitor
         }
     }
 
+    public class ScheduleTime : ICloneable
+    {
+        DateTime _StartTime;
+        DateTime? _EndTime;
+        public bool IsEnabled { get; set; }
+        public TriggerType Triggertype { get; set; }
+        public DateTime StartTime
+        {
+            get { return _StartTime.StartOfMinute(); }
+            set { _StartTime = value; }
+        }
+        public DateTime? EndTime
+        {
+            get
+            {
+                if (_EndTime.HasValue)
+                    return _EndTime.Value.StartOfMinute();
+                return _EndTime;
+            }
+            set { _EndTime = value; }
+        }
+        public EndOnType EndTime_Type { get; set; }
 
-   
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
 
+       
+    }
+    public enum TriggerType
+    {
+        Daily=0,
+        Weekly=1,
+        Monthly=2
+    }
+    public enum EndOnType
+    {
+        SameStartTime = 0,
+        NextDay = 1,
+        After_2_days = 2,
+        After_3_days = 3,       
+        After_5_days = 4,
+        After_7_days = 5
+    }
 }

@@ -85,7 +85,7 @@ namespace FolderMonitor.Network
       ///
       /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
-      public static void ConnectTo(string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
+      public static  void ConnectTo(string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
          ConnectDisconnectCore(new ConnectDisconnectArguments
          {

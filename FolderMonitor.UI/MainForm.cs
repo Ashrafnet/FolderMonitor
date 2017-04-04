@@ -57,7 +57,11 @@ namespace FolderMonitor.UI
 
             editButton.Enabled = removeButton.Enabled = propertyGrid1.Enabled = propertyGrid2.Enabled =
                 listView1.SelectedIndices.Count > 0;
+            try
+            {
 
+                    
+            Cursor = Cursors.WaitCursor;
             if (listView1.SelectedIndices.Count > 0)
             {
                 propertyGrid1.SelectedObject = ((PathFromAndTo)listView1.SelectedItems[0].Tag).From;
@@ -68,7 +72,7 @@ namespace FolderMonitor.UI
                 var log = Path.GetDirectoryName(FolderMonitorServicePath);
                 var foldername = tag.From.Path.GetFolderName();
                 log = Path.Combine(log, foldername + ".log");
-
+                
                 txtlogs.Text = ReadFileAsString(log);
                 txtlogs.Tag = log;
 
@@ -80,7 +84,11 @@ namespace FolderMonitor.UI
                 txtlogs.Text = ReadFileAsString(log);
                 txtlogs.Tag = log;
             }
-
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         string ReadFileAsString(string fpath)
@@ -89,23 +97,31 @@ namespace FolderMonitor.UI
 
             try
             {
+               // System.Threading.Thread.Sleep(3000);
                 linkLabel1.Text = fpath;
                 linkLabel1.Tag = fpath;
                 if (File.Exists(fpath))
                 {
-                    //if (checkBox1.Checked)
-                    //    return ReadasLines(fpath);
-                    var fs = new FileStream(fpath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    using (var sr = new StreamReader(fs))
+                    LogFileReader r = new LogFileReader(fpath);
+                    var rr = "";
+                    foreach (var item in r)
                     {
-                        var rr = sr.ReadToEnd() + "";
-                        fs.Close(); fs.Dispose(); sr.Dispose();
-                        if (rr.Length > 1024 * 1000)
-                            return rr.Substring(rr.Length - 1024 * 1000);
-                        else
-                            return rr;
-
+                        rr += item + Environment.NewLine;
+                        if (rr.Length > 1024 * 200)
+                            break;
                     }
+                    return rr;
+                    //var fs = new FileStream(fpath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    //using (var sr = new StreamReader(fs))
+                    //{
+                    //    var rr = sr.ReadToEnd() + "";
+                    //    fs.Close(); fs.Dispose(); sr.Dispose();
+                    //    if (rr.Length > 1024 * 1000)
+                    //        return rr.Substring(rr.Length - 1024 * 1000);
+                    //    else
+                    //        return rr;
+
+                    //}
                 }
                 else
                 {
@@ -206,12 +222,15 @@ namespace FolderMonitor.UI
                 Cursor = Cursors.WaitCursor;
                 listView1.Items.Clear();
                 var ls = ServiceConfig.Default.GetAllTasks(false   );
+                Thread t = new Thread(() =>
+                  {
+                      foreach (var path in ls)
+                      {
+                          AddTaskToListView(path);
 
-                foreach (var path in ls)
-                {
-                    AddTaskToListView(path);
-
-                }
+                      }
+                  });
+                t.Start();
 
                 if (listView1.Items.Count > 0)
                     listView1.Items[0].Selected = true;
@@ -533,6 +552,14 @@ namespace FolderMonitor.UI
                 ListViewItem lvi = listView1.SelectedItems[0];
                 lvi.Text = x.MirrorTask.From.Path;
                 lvi.SubItems[1].Text = x.MirrorTask.To.Path;
+                lvi.SubItems[4].Text = x.MirrorTask.To.Path;
+
+                if (x.MirrorTask.ScheduleTask == null || !x.MirrorTask.ScheduleTask.IsEnabled)
+                    lvi.SubItems[4].Text="";
+                else
+                    lvi.SubItems[4].Text=Enum.GetName(typeof(TriggerType), x.MirrorTask.ScheduleTask.Triggertype) + " At " + x.MirrorTask.ScheduleTask.StartTime.ToString("hh:mm tt");
+
+
                 lvi.Tag = (PathFromAndTo)x.MirrorTask.Clone();
                 if (!x.MirrorTask.From.PathExists())
                     lvi.ImageIndex = 1;
@@ -826,6 +853,10 @@ namespace FolderMonitor.UI
             lvi.SubItems.Add(task.To.Path);
             lvi.SubItems.Add("");
             lvi.SubItems.Add("");
+            if (task.ScheduleTask == null || !task.ScheduleTask.IsEnabled)
+                lvi.SubItems.Add("");
+            else
+                lvi.SubItems.Add(Enum.GetName(typeof(TriggerType), task.ScheduleTask.Triggertype)+ " At " + task.ScheduleTask.StartTime.ToString ("hh:mm tt"));
             lvi.Tag = task;// new PathFromAndTo(task.From, task.To);
 
             if (!task.From.PathExists())
@@ -854,7 +885,16 @@ namespace FolderMonitor.UI
                 lvi.SubItems[3].Text ="Yes";
                 lvi.SubItems[3].BackColor = System.Drawing.Color.White;
             }
-            listView1.Items.Add(lvi);
+
+            if (listView1.InvokeRequired)
+                listView1.Invoke(new MethodInvoker(delegate
+                {
+                    listView1.Items.Add(lvi);
+
+                }));
+            else
+                listView1.Items.Add(lvi);
+
             return true;
         }
         private void openSourceFolderToolStripMenuItem_Click(object sender, EventArgs e)
