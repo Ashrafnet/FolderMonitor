@@ -34,6 +34,7 @@ namespace FolderMonitor.UI
             }
         }
         bool __savestate = true;
+        bool _restart_service_req = false ;
         static ServiceManager _service = null;
 
 
@@ -342,6 +343,7 @@ namespace FolderMonitor.UI
                 try
                 {
                     _service.Start();
+                    _restart_service_req = false;
                 }
                 catch
                 {
@@ -349,6 +351,7 @@ namespace FolderMonitor.UI
                     {
                         Thread.Sleep(500);
                         _service.Start();
+                        _restart_service_req = false;
                     }
                     catch (Exception er)
                     {
@@ -567,6 +570,7 @@ namespace FolderMonitor.UI
                     lvi.ImageIndex = x.MirrorTask.From.IsPathHasUserName || x.MirrorTask.To.IsPathHasUserName ? 3 : 0;
 
                 _savestate = false;
+                _restart_service_req = x.MirrorTask.From != paths.From || x.MirrorTask.To  != paths.To ;
             }
         }
 
@@ -635,11 +639,14 @@ namespace FolderMonitor.UI
                 //    return;
 
                 SaveTasksToConfigFile();
-                if (MessageBox.Show("Tasks has been saved, to take effect you have to restart the Folder Monitor Service." + Environment.NewLine + "Would you like to restart it Now?", "Confirm?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (_restart_service_req)
                 {
-                    stopservice_Click(sender, e);
-                    startservice_Click(sender, e);
+                    if (MessageBox.Show("Tasks has been saved, to take effect you have to restart the Folder Monitor Service." + Environment.NewLine + "Would you like to restart it Now?", "Confirm?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        stopservice_Click(sender, e);
+                        startservice_Click(sender, e);
 
+                    }
                 }
             }
             catch (Exception er)
@@ -856,7 +863,7 @@ namespace FolderMonitor.UI
             if (task.ScheduleTask == null || !task.ScheduleTask.IsEnabled)
                 lvi.SubItems.Add("");
             else
-                lvi.SubItems.Add(Enum.GetName(typeof(TriggerType), task.ScheduleTask.Triggertype)+ " At " + task.ScheduleTask.StartTime.ToString ("hh:mm tt"));
+                lvi.SubItems.Add(task.GetSchdulerAsText());
             lvi.Tag = task;// new PathFromAndTo(task.From, task.To);
 
             if (!task.From.PathExists())

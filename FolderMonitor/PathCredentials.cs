@@ -23,6 +23,63 @@ namespace FolderMonitor
             ExcludedFiles = new List<string>();
             ExcludedFolders = new List<string>();
         }
+
+        /// <summary>
+        /// use this tool to make sure that path ends with no escap char or space
+        /// </summary>
+        /// <param name="WithLowercase"></param>
+        public  void TrimPath(bool WithLowercase=true )
+        {
+            if (string.IsNullOrWhiteSpace(Path)) return;
+            if (WithLowercase)
+                Path = Path.ToLower().Trim().TrimEnd("\\".ToCharArray());
+            else
+                Path = Path.Trim().TrimEnd("\\".ToCharArray());
+        }
+        public static bool operator ==(PathCredentials path1, PathCredentials path2)
+        {
+            // If left hand side is null...
+            if (ReferenceEquals(path1, null))
+            {
+                // ...and right hand side is null...
+                if (ReferenceEquals(path2, null))
+                {
+                    //...both are null and are Equal.
+                    return true;
+                }
+
+                // ...right hand side is not null, therefore not Equal.
+                return false;
+            }
+            else if (ReferenceEquals(path2, null))
+            {
+                // ...and left hand side is null...
+                if (ReferenceEquals(path1, null))
+                {
+                    //...both are null and are Equal.
+                    return true;
+                }
+
+                // ...right hand side is not null, therefore not Equal.
+                return false;
+            }
+
+
+            path1.TrimPath(); path2.TrimPath();
+
+            bool result = path1.Path == path2.Path;
+            if (!result) return false;
+
+            result = path1.UserName == path2.UserName && path1.Password == path2.Password && path1.Domain == path2.Domain;
+            return result;
+        }
+
+     
+        public static bool operator !=(PathCredentials path1, PathCredentials path2)
+        {
+            var result= path1== path2;
+            return !result;
+        }
         private string _pass = null;
         /// <summary>
         /// The full path of folder.
@@ -270,7 +327,17 @@ namespace FolderMonitor
             To = to;
             IsEnabled = true;
         }
-      
+    public   string GetSchdulerAsText()
+        {
+            if (ScheduleTask == null || !ScheduleTask.IsEnabled) return "";
+            var result ="Starts "+ Enum.GetName(typeof(TriggerType), ScheduleTask.Triggertype) + " At " + ScheduleTask.StartTime.ToString("hh:mm tt");
+            if(ScheduleTask.EndTime.HasValue)
+            {
+                result +=" and ends on "+ Enum.GetName(typeof(EndOnType), ScheduleTask.EndTime_Type) + " At " + ScheduleTask.EndTime.Value .ToString("hh:mm tt");
+
+            }
+            return result;
+        }
 
         public override string ToString()
         {
