@@ -280,7 +280,7 @@ namespace FolderMonitor.UI
                     case ServiceControllerStatus.Running:
                     case ServiceControllerStatus.StartPending:
                     case ServiceControllerStatus.ContinuePending:
-                        statusInfo.Text = "Folder Monitor Service Status: Runing";
+                        statusInfo.Text = "Folder Monitor Service Status: Running";
                         statusInfo.ForeColor = System.Drawing.Color.Green;
                         statusInfo.Image = Properties.Resources.check;
 
