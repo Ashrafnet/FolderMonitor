@@ -240,6 +240,7 @@ namespace FolderMonitor
 
             try
             {
+                ErrorOccured?.Invoke(this, new Exception("Robocopy Agent has been started"));
                 IsRunning = true;
                 LastRunOn = DateTime.Now;
                 if (fromPath.IsUNC)
@@ -345,7 +346,9 @@ namespace FolderMonitor
                 if (process != null && !process.HasExited)
                 {
                     process.Kill();
-                   
+                    ErrorOccured?.Invoke(this, new Exception("Robocopy Agent has been stopped"));
+
+
                 }
             }
             catch (Exception er)
@@ -362,6 +365,8 @@ namespace FolderMonitor
         {
             try
             {
+                
+                
                 timer1.Change(Timeout.Infinite, Timeout.Infinite);
                 timer1.Dispose();
                 timer1 = null;

@@ -114,12 +114,12 @@ namespace FolderMonitor
      
         private void Sync_DataReceivedOccured(object sender, DataReceivedEventArgs e)
         {
-            _logger.LogWrite("Sync_DataReceivedOccured Function: " + Environment.NewLine  + e.Data , logType.information );
+            _logger.LogWrite( e.Data , logType.information );
         }
 
         void sync_ErrorOccured(object sender, Exception exception)
         {
-            _logger.LogWrite("sync_ErrorOccured Function: " + Environment.NewLine + exception.InnerMessages(), logType.Error);                       
+            _logger.LogWrite( exception.InnerMessages(), logType.Error);                       
         }
 
 
